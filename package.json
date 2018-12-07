@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/mimccio/react-table#readme",
   "dependencies": {
-    "react": "^16.6.3"
+    "react": "^16.6.3",
+    "styled-components": "^4.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
