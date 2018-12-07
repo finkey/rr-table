@@ -2,9 +2,12 @@
   "name": "react-table",
   "version": "0.1.0",
   "description": "Responsive and customizable React Table",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "prebuild": "rm -rf lib/*",
+    "build": "babel --out-dir lib src",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,12 @@
   "homepage": "https://github.com/mimccio/react-table#readme",
   "peerDependencies": {
     "react": "^16.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4"
   }
 }
