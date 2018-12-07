@@ -12,7 +12,7 @@ import Cell from './index';
 import readme from './README.md';
 
 /** Stories */
-storiesOf('Components|Parts/Cell', module)
+storiesOf('Components|Cell', module)
   /** Decorators */
   .addDecorator(story => (
     <BorderWrapper border={boolean('-- wrapper border --', true)}>{story()}</BorderWrapper>
