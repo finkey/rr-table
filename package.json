@@ -1,13 +1,15 @@
 {
-  "name": "react-table",
-  "version": "0.1.0.0",
+  "name": "react-mf-table",
+  "version": "0.0.0-2",
   "description": "Responsive and customizable React Table",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest --watch",
-    "prebuild": "rm -rf lib/*",
-    "build": "babel --out-dir lib src",
-    "prepare": "npm run build"
+    "prebuild": "rm -rf dist/*",
+    "build": "babel --out-dir dist src",
+    "prepare": "npm run build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,10 @@
     "@babel/core": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^4.0.12",
+    "@storybook/addon-links": "^4.0.12",
+    "@storybook/addons": "^4.0.12",
+    "@storybook/react": "^4.0.12",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
@@ -43,7 +49,8 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "react-dom": "^16.6.3"
   },
   "peerDependencies": {
     "react": "^16.0.0"
