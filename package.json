@@ -1,0 +1,27 @@
+{
+  "name": "react-table",
+  "version": "0.1.0",
+  "description": "Responsive and customizable React Table",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimccio/react-table.git"
+  },
+  "keywords": [
+    "React",
+    "Responsive",
+    "Table"
+  ],
+  "author": "mimccio",
+  "license": "GNU LESSER GENERAL PUBLIC LICENSE",
+  "bugs": {
+    "url": "https://github.com/mimccio/react-table/issues"
+  },
+  "homepage": "https://github.com/mimccio/react-table#readme",
+  "peerDependencies": {
+    "react": "^16.0.0"
+  }
+}
