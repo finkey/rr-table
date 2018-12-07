@@ -6,6 +6,7 @@ import { chooseMediaQuery } from 'utils';
 import { DEFAULT_MEDIA_QUERY } from 'config/constants/mediaQueries';
 import Media from 'containers/Media';
 import DefaultCell from './components/DefaultCell';
+import 'config/styles/default.css';
 
 /** Styles */
 const CellWrapper = styled.div`
