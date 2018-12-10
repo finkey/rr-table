@@ -20,7 +20,7 @@ class Table extends React.Component {
     /** List of breakpoints */
     breakpoints: PropTypes.arrayOf(PropTypes.number),
     /** Render Card Component */
-    card: PropTypes.func,
+    // card: PropTypes.func,
     /** Cell Padding */
     cellPadding: PropTypes.string,
     /** Center the text in the cell */
@@ -60,12 +60,12 @@ class Table extends React.Component {
     /** List of Titles of the columns */
     titles: PropTypes.arrayOf(PropTypes.string),
     /** With default Card or not */
-    withCard: PropTypes.bool,
+    // withCard: PropTypes.bool,
   };
 
   state = {
-    cardIsOpen: false,
-    cardData: {},
+    // cardIsOpen: false,
+    // cardData: {},
     rowId: '' /* eslint-disable-line react/no-unused-state */,
   };
 
@@ -134,11 +134,11 @@ class Table extends React.Component {
   // };
 
   render() {
-    const { cardIsOpen, cardData } = this.state;
+    //  const { cardIsOpen, cardData } = this.state;
     const {
       // children,
       breakpoints,
-      card,
+      //   card,
       cellPadding,
       center,
       colWidths,
@@ -155,7 +155,7 @@ class Table extends React.Component {
       rowHeight,
       textColor,
       titles,
-      withCard,
+      // withCard,
     } = this.props;
 
     return (

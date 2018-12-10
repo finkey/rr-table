@@ -1,13 +1,13 @@
 {
   "name": "rr-table",
-  "version": "0.0.0-3",
+  "version": "0.0.0-6",
   "description": "Responsive and customizable React Table",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest --watch",
-    "prebuild": "rm -rf dist/*",
-    "build": "babel --out-dir dist src",
-    "prepare": "npm run build",
+    "prebuild": "rm -rf lib/*",
+    "watch": "babel --watch src --out-dir lib --source-maps inline --copy-files",
+    "build": "babel src --out-dir lib --source-maps inline --copy-files",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -61,8 +61,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
-    "react-dom": "^16.6.3",
-    "style-loader": "^0.23.1"
+    "react-dom": "^16.6.3"
   },
   "peerDependencies": {
     "react": "^16.0.0"

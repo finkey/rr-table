@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import BorderWrapper from './BorderWrapper';
 
+/** Styles */
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -17,7 +18,8 @@ const Content = styled.div`
   padding: 3rem;
 `;
 
-export const StoryWrapper = ({ children, style, border }) => (border ? (
+/** Component */
+const StoryWrapper = ({ children, style, border }) => (border ? (
   <Wrapper style={style}>
     <Content>
       <BorderWrapper border={border}>{children}</BorderWrapper>
@@ -29,6 +31,7 @@ export const StoryWrapper = ({ children, style, border }) => (border ? (
   </Wrapper>
 ));
 
+/** PropTypes */
 StoryWrapper.propTypes = {
   border: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   /** Elements to display together */

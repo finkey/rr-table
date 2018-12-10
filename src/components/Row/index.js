@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
+
 import { rowDefaultBackgroundColor } from 'config/styles/colors';
 import 'config/styles/default.css';
 
