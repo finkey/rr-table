@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
 import { setBackgroundColor } from 'utils';
+import CardContainer from 'containers/CardContainer';
 import Row from 'components/Row';
 // import Card from 'components/Card';
 import 'config/styles/default.css';
@@ -20,7 +21,7 @@ class Table extends React.Component {
     /** List of breakpoints */
     breakpoints: PropTypes.arrayOf(PropTypes.number),
     /** Render Card Component */
-    // card: PropTypes.func,
+    card: PropTypes.func,
     /** Cell Padding */
     cellPadding: PropTypes.string,
     /** Center the text in the cell */
@@ -64,81 +65,31 @@ class Table extends React.Component {
   };
 
   state = {
-    // cardIsOpen: false,
-    // cardData: {},
+    cardIsOpen: false,
+    cardData: {},
     rowId: '' /* eslint-disable-line react/no-unused-state */,
   };
 
-  toggleCard = (data) => {
+  toggleCard = ({ data, id }) => {
     this.setState((previousState) => {
       if (!previousState.cardIsOpen) {
-        return { cardIsOpen: true, cardData: data, rowId: data.rowId };
+        return { cardIsOpen: true, cardData: data, rowId: id };
       }
-      if (previousState.rowId === data.rowId) {
+      if (previousState.rowId === id) {
         return { cardIsOpen: false, cardData: {}, rowId: '' };
       }
-      return { cardData: data };
+      return { cardData: data, rowId: id };
     });
-
-    // this.setState(previousState =>
-    // ({ cardIsOpen: !previousState.cardIsOpen, cardData: data, rowId: data.rowId }));
-
-    // this.setState(previousState => {
-    //   if (previousState.cardIsOpen && previousState.rowId === data.rowId) {
-    //     return {cardIsOpen: false}
-    //   }
-    //   if (previousState.cardIsOpen && previousState !== data.rowId) {
-    //     return
-    //   }
-    // })
   };
 
-  // setBackgroundColor = (index) => {
-  //   if (typeof this.colored === 'object') {
-  //     if (this.colored.parity === 'even' || this.colored.parity % 2 === 0) {
-  //       return index % 2 !== 0 ? this.colored.color || rowBackgroundColor : 'transparent';
-  //     }
-  //     if (colored.parity === 'odd' || colored.parity % 2 !== 0) {
-  //       return index % 2 !== 0 ? colored.color || rowBackgroundColor : 'transparent';
-  //     }
-  //   }
-  //   if (colored === true && index % 2 !== 0) {
-  //     return rowBackgroundColor;
-  //   }
-  //   return 'tranparent';
-  // };
-
-  // ----------
-
-  // setBackgroundColor = (index) => {
-  //   const { colored } = this.props;
-
-  //   if (typeof colored === 'object') {
-  //     if (colored.parity === 'even' || colored.parity % 2 === 0) {
-  //       return index % 2 === 0 ? colored.color || true : false;
-  //     }
-  //     if (colored.parity === 'odd' || colored.parity % 2 !== 0) {
-  //       return index % 2 !== 0 ? colored.color || true : false;
-  //     }
-  //   }
-  //   if (typeof colored === 'string') {
-  //     if (index % 2 !== 0) {
-  //       return colored;
-  //     }
-  //     return false;
-  //   }
-  //   if (colored === true && index % 2 === 0) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
+  closeCard = () => this.setState({ cardIsOpen: false, cardData: {}, rowId: '' });
 
   render() {
-    //  const { cardIsOpen, cardData } = this.state;
+    const { cardIsOpen, cardData } = this.state;
     const {
       // children,
       breakpoints,
-      //   card,
+      card,
       cellPadding,
       center,
       colWidths,
@@ -155,7 +106,6 @@ class Table extends React.Component {
       rowHeight,
       textColor,
       titles,
-      // withCard,
     } = this.props;
 
     return (
@@ -196,6 +146,7 @@ class Table extends React.Component {
                 center={center}
                 colWidths={colWidths}
                 colored={setBackgroundColor(index, colored)}
+                data={data}
                 emptyCellContent={emptyCellContent}
                 fontSize={fontSize}
                 id={id}
@@ -211,9 +162,11 @@ class Table extends React.Component {
             );
           })}
 
-        {/* {card
-          ? card({ cardData, cardIsOpen, toggleCard: this.toggleCard })
-          : withCard && <Card cardIsOpen={cardIsOpen} data={cardData} />} */}
+        {card && (
+          <CardContainer isOpen={cardIsOpen}>
+            {card({ data: cardData, close: this.closeCard })}
+          </CardContainer>
+        )}
       </TableWrapper>
     );
   }

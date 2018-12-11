@@ -10,6 +10,7 @@ import {
 import {
   breakpoints, list, keys, titles, priorities, colWidths,
 } from 'config/storybook/mocks';
+import { Card } from 'config/storybook/components';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
 // import Card from 'components/Card';
@@ -17,6 +18,7 @@ import Table from './index';
 
 /** Stories */
 storiesOf('Table', module)
+  /** Decorators */
   .addDecorator(centered)
 
   .add('- Default Table', () => (
@@ -25,22 +27,34 @@ storiesOf('Table', module)
       list={object('list', list)}
     />
   ))
+
+  .add('- Default Table with Card', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'Age', 'Sex', 'Job', 'id'])}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      list={object('list', list)}
+    />
+  ))
+
   .add('- Responsive Table Colored', () => (
     <Table
       titles={array('titles', titles)}
       keys={array('keys', keys)}
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
       list={object('list', list)}
     />
   ))
-  .add('- Responsive Table with cutom options', () => (
+
+  .add('- Responsive Table with custom options', () => (
     <Table
       titles={array('titles', titles)}
       keys={array('keys', keys)}
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={object('colored', { color: '#e1bee7', parity: 'odd' })}
       center={boolean('center', true)}
       colWidths={array('colWidths', colWidths)}
@@ -54,6 +68,28 @@ storiesOf('Table', module)
       keys={array('keys', keys)}
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={object('colored', { color: '#e1bee7', parity: 1 })}
+      center={boolean('center', false)}
+      emptyCellContent={() => <div style={{ color: 'peru', fontWeight: 'bold' }}>NA</div>}
+      colWidths={array('colWidths', colWidths)}
+      fontSize={text('fontSize', '20px')}
+      lineClamp={number('lineClamp', 3)}
+      lineHeight={number('lineHeight', 2)}
+      rowHeight={text('rowHeight', '180px')}
+      textColor={color('textColor', '#303f9f')}
+      cellPadding={text('cellPadding', '20px')}
+      list={object('list', list)}
+    />
+  ))
+
+  .add('- Table with Card', () => (
+    <Table
+      titles={array('titles', titles)}
+      keys={array('keys', keys)}
+      breakpoints={array('breakpoints', breakpoints)}
+      priorities={array('priorities', priorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={object('colored', { color: '#e1bee7', parity: 1 })}
       center={boolean('center', false)}
       emptyCellContent={() => <div style={{ color: 'peru', fontWeight: 'bold' }}>NA</div>}

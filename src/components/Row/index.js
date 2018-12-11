@@ -26,6 +26,7 @@ const Row = ({
   children,
   colWidths,
   colored,
+  data,
   emptyCellContent,
   fontSize,
   id,
@@ -54,6 +55,7 @@ const Row = ({
       backgroundColor={setBackgroundColor()}
       onClick={() => toggleCard({
         breakpoints,
+        data,
         id,
         items,
         priorities,
@@ -62,14 +64,14 @@ const Row = ({
       style={style}
     >
       {children
-        || items.map((data, i) => {
+        || items.map((item, i) => {
           const cellId = uuidv4();
           const columnWidth = colWidths && colWidths[i];
           return (
             <Cell
               breakpoints={breakpoints}
               center={center}
-              data={data}
+              data={item}
               emptyCellContent={emptyCellContent}
               fontSize={fontSize}
               id={cellId}
@@ -100,6 +102,8 @@ Row.propTypes = {
   colWidths: PropTypes.arrayOf(PropTypes.number),
   /** Color one line out of two (set to true or set color) */
   colored: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  /** Data as an object */
+  data: PropTypes.object,
   /** Text or Component to display when cell is empty */
   emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /** Text font-size */
