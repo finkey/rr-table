@@ -50,6 +50,8 @@ class Table extends React.Component {
     lineHeight: PropTypes.number,
     /** List of data to display */
     list: PropTypes.arrayOf(PropTypes.object),
+    /** Spread multiKeys in same cell on multiple lines */
+    multiLineKeys: PropTypes.bool,
     /** List of priorities */
     priorities: PropTypes.arrayOf(PropTypes.number),
     /** Render Row Component */
@@ -101,6 +103,7 @@ class Table extends React.Component {
       lineClamp,
       lineHeight,
       list,
+      multiLineKeys,
       priorities,
       row,
       rowHeight,
@@ -134,6 +137,26 @@ class Table extends React.Component {
             let items = [];
             if (keys) {
               keys.map((key) => {
+                if (Array.isArray(key)) {
+                  let sameLineItem = '';
+                  const space = multiLineKeys ? '\n' : ''
+                  sameLineItem = key.map(k => `${sameLineItem}${data[k] + space}`);
+                  {/* let multiLineItems = [];
+                  const multiLineItem = key.map((k) => {
+                    multiLineItems = [...multiLineItems, data[k]];
+                    return (
+                      <React.Fragment>
+                        {multiLineItems.map(i => (
+                          <p>{i}</p>
+                        ))}
+                      </React.Fragment>
+                    );
+                  }); */}
+                    const item = multiLineKeys ? <div style={{ whiteSpace: 'pre-line', height: '100%', width: '100%' }}>{sameLineItem}</div> : sameLineItem;
+                  items = [
+                    ...items,item
+                  ];
+                }
                 items = [...items, data[key]];
                 return null;
               });

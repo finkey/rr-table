@@ -51,7 +51,8 @@ storiesOf('Table', module)
   .add('- Responsive Table with custom options', () => (
     <Table
       titles={array('titles', titles)}
-      keys={array('keys', keys)}
+      keys={object('keys', [['name', 'surname'], 'age', 'job', 'sex'])}
+      multiLineKeys={boolean('multiLineKeys', true)}
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
