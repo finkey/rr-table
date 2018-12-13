@@ -11,7 +11,7 @@ import 'config/styles/default.css';
 
 /** Styles */
 const TableWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
 `;
 
 /** Component */
