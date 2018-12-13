@@ -1,0 +1,71 @@
+{
+  "name": "rr-table",
+  "version": "0.0.0-alpha-0",
+  "description": "Responsive and customizable React Table",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest --watch",
+    "prebuild": "rm -rf lib/*",
+    "watch": "babel --watch src --out-dir lib --source-maps inline --copy-files",
+    "build": "babel src --out-dir lib --source-maps inline --copy-files",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimccio/react-table.git"
+  },
+  "keywords": [
+    "React",
+    "Responsive",
+    "Table"
+  ],
+  "author": "mimccio",
+  "license": "GNU LESSER GENERAL PUBLIC LICENSE",
+  "bugs": {
+    "url": "https://github.com/mimccio/react-table/issues"
+  },
+  "homepage": "https://github.com/mimccio/react-table#readme",
+  "dependencies": {
+    "react": "^16.7.0-alpha.0",
+    "styled-components": "^4.1.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-a11y": "^4.0.12",
+    "@storybook/addon-actions": "^4.0.12",
+    "@storybook/addon-backgrounds": "^4.0.12",
+    "@storybook/addon-centered": "^4.0.12",
+    "@storybook/addon-info": "^4.0.12",
+    "@storybook/addon-knobs": "^4.0.12",
+    "@storybook/addon-links": "^4.0.12",
+    "@storybook/addon-notes": "^4.0.12",
+    "@storybook/addon-options": "^4.0.12",
+    "@storybook/addon-storysource": "^4.0.12",
+    "@storybook/addon-viewport": "^4.0.12",
+    "@storybook/addons": "^4.0.12",
+    "@storybook/react": "^4.0.12",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-babel-module": "^4.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "jest-styled-components": "^6.3.1",
+    "react-dom": "^16.7.0-alpha.0",
+    "react-test-renderer": "^16.6.3"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0"
+  }
+}
