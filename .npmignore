@@ -1,6 +1,6 @@
 src/
 .storybook
-.babelrc
+
 .eslintignore
 .eslintrc
 .gitignore

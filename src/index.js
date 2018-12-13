@@ -1,3 +1,3 @@
-import Bla from 'components/Bla';
+import Table from 'components/Table';
 
-export default Bla;
+export default Table;
