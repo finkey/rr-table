@@ -16,6 +16,7 @@ const Wrapper = styled.div`
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
+  position:relative;
 `;
 
 /** Component */

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
-import { setBackgroundColor } from 'utils';
-import CardContainer from 'containers/CardContainer';
+import { setBackgroundColor, selectItems } from 'utils';
+import CardWrapper from 'components/CardWrapper';
 import Row from 'components/Row';
 // import Card from 'components/Card';
 import 'config/styles/default.css';
@@ -50,14 +50,14 @@ class Table extends React.Component {
     lineHeight: PropTypes.number,
     /** List of data to display */
     list: PropTypes.arrayOf(PropTypes.object),
-    /** Spread multiKeys in same cell on multiple lines */
-    multiLineKeys: PropTypes.bool,
     /** List of priorities */
     priorities: PropTypes.arrayOf(PropTypes.number),
     /** Render Row Component */
     row: PropTypes.func,
     /** Height of the Row */
     rowHeight: PropTypes.string,
+    /** separator to "join" list of string */
+    separator: PropTypes.string,
     /** Color of the displayed text */
     textColor: PropTypes.string,
     /** List of Titles of the columns */
@@ -78,13 +78,13 @@ class Table extends React.Component {
         return { cardIsOpen: true, cardData: data, rowId: id };
       }
       if (previousState.rowId === id) {
-        return { cardIsOpen: false, cardData: {}, rowId: '' };
+        return { cardIsOpen: false, rowId: '' };
       }
       return { cardData: data, rowId: id };
     });
   };
 
-  closeCard = () => this.setState({ cardIsOpen: false, cardData: {}, rowId: '' });
+  closeCard = () => this.setState({ cardIsOpen: false, rowId: '' });
 
   render() {
     const { cardIsOpen, cardData } = this.state;
@@ -103,7 +103,7 @@ class Table extends React.Component {
       lineClamp,
       lineHeight,
       list,
-      multiLineKeys,
+      separator,
       priorities,
       row,
       rowHeight,
@@ -134,33 +134,7 @@ class Table extends React.Component {
           ? list.map(data => row({ ...data, id: data.id || uuidv4() }))
           : list.map((data, index) => {
             const id = data.id || uuidv4();
-            let items = [];
-            if (keys) {
-              keys.map((key) => {
-                if (Array.isArray(key)) {
-                  let sameLineItem = '';
-                  const space = multiLineKeys ? '\n' : ''
-                  sameLineItem = key.map(k => `${sameLineItem}${data[k] + space}`);
-                  {/* let multiLineItems = [];
-                  const multiLineItem = key.map((k) => {
-                    multiLineItems = [...multiLineItems, data[k]];
-                    return (
-                      <React.Fragment>
-                        {multiLineItems.map(i => (
-                          <p>{i}</p>
-                        ))}
-                      </React.Fragment>
-                    );
-                  }); */}
-                    const item = multiLineKeys ? <div style={{ whiteSpace: 'pre-line', height: '100%', width: '100%' }}>{sameLineItem}</div> : sameLineItem;
-                  items = [
-                    ...items,item
-                  ];
-                }
-                items = [...items, data[key]];
-                return null;
-              });
-            }
+            const items = selectItems({ data, keys, separator });
 
             return (
               <Row
@@ -173,7 +147,7 @@ class Table extends React.Component {
                 emptyCellContent={emptyCellContent}
                 fontSize={fontSize}
                 id={id}
-                items={keys ? items : Object.values(data)}
+                items={items}
                 key={id}
                 lineClamp={lineClamp}
                 lineHeight={lineHeight}
@@ -186,9 +160,9 @@ class Table extends React.Component {
           })}
 
         {card && (
-          <CardContainer isOpen={cardIsOpen}>
+          <CardWrapper isOpen={cardIsOpen}>
             {card({ data: cardData, close: this.closeCard })}
-          </CardContainer>
+          </CardWrapper>
         )}
       </TableWrapper>
     );
