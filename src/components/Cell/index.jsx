@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Media from 'react-media';
 
 import { chooseMediaQuery } from 'utils';
 import { DEFAULT_MEDIA_QUERY } from 'config/constants/mediaQueries';
-import Media from 'containers/Media';
+// import Media from 'containers/Media';
 import DefaultCell from './components/DefaultCell';
 import 'config/styles/default.css';
 

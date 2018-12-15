@@ -18,74 +18,116 @@ export const items = [
   'sample text - 7',
 ];
 
-export const titles = ['Name', 'Surname', 'Age', 'Job', 'Sex'];
+export const titles = ['Name', 'Surname', 'Age', 'Job', 'Sex', 'Animaux'];
 
-export const keys = ['name', 'surname', 'age', 'job', 'sex'];
+export const keys = ['name', 'surname', 'info.age', 'company.job', 'info.sex', 'pets'];
 
 export const list = [
   {
     name: 'Francis',
     surname: 'Denis',
-    age: 33,
-    sex: 'male',
-    job: 'artist',
+    info: {
+      age: 33,
+      sex: 'male',
+    },
+    company: {
+      job: 'artist',
+    },
     id: '1',
+    pets: ['dog', 'cat'],
   },
   {
     name: 'Ingals Bla bla bla',
     surname:
       'Charles Le plus beau et le plus gros et le plus sympas, il est rigolo hahah hahah ahahah ahahah',
-    age: 47,
-    sex: 'male',
-    job: 'teacher',
+    info: {
+      age: 47,
+      sex: 'male',
+    },
+    company: {
+      job: 'teacher',
+    },
+
     id: '2',
   },
   {
     name: 'Dumond',
     surname: 'Charlotte haha oui oui la plus belle',
-    age: 53,
-    sex: 'female',
-    job: 'astraunot',
+    info: {
+      age: 53,
+      sex: 'female',
+    },
+    company: {
+      job: 'astraunot',
+    },
+
     id: '3',
+    pets: ['fish', 'cat'],
   },
   {
     name: 'Applencourt',
     surname: 'Francoise',
-    age: 23,
-    sex: 'female',
-    job: 'singer',
+    info: {
+      age: 23,
+      sex: 'female',
+    },
+    company: {
+      job: 'singer',
+    },
+
     id: '4',
   },
   {
     name: 'Dupond',
     surname: 'Herver',
-    age: 33,
-    sex: 'male',
-    job: 'chef',
+    info: {
+      age: 33,
+      sex: 'male',
+    },
+    company: {
+      job: 'chef',
+    },
+
     id: '5',
+    pets: ['dog'],
   },
   {
     name: 'Pierre',
     surname: 'Arthur',
-    age: 63,
-    sex: 'male',
-    job: '',
+    info: {
+      age: 63,
+      sex: 'male',
+    },
+    company: {
+      job: '',
+    },
+
     id: '6',
   },
   {
     name: 'Dicaprio',
     surname: 'Jose',
-    age: 34,
-    sex: 'male',
-    job: 'actor',
+    info: {
+      age: 34,
+      sex: 'male',
+    },
+    company: {
+      job: 'actor',
+    },
+
     id: '7',
   },
   {
     name: 'James',
     surname: 'Lebron',
-    age: 19,
-    sex: 'male',
-    job: 'footballer',
+    info: {
+      age: 19,
+      sex: 'male',
+    },
+    company: {
+      job: 'footballer',
+    },
+
     id: '8',
   },
 ];

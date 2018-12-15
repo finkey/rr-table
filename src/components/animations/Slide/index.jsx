@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Transition from 'react-transition-group/Transition';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -59,6 +61,26 @@ const Wrapper = styled.div`
   );
 `;
 
-const SlideComp = ({ children, status }) => <Wrapper status={status}>{children}</Wrapper>;
+const Slide = ({ children, isOpen, delay }) => (
+  <Transition
+    in={isOpen}
+    timeout={{
+      enter: 0,
+      exit: delay,
+    }}
+  >
+    {status => <Wrapper status={status}>{children}</Wrapper>}
+  </Transition>
+);
 
-export default SlideComp;
+Slide.propTypes = {
+  children: PropTypes.node,
+  isOpen: PropTypes.bool,
+  delay: PropTypes.number,
+};
+
+Slide.defaultProps = {
+  delay: 300,
+};
+
+export default Slide;
