@@ -1,0 +1,3 @@
+## Config
+
+Config files for storybook, global styling, constants etc...

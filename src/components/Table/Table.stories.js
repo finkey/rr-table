@@ -22,15 +22,13 @@ storiesOf('Table', module)
   .addDecorator(centered)
 
   .add('- Default Table', () => (
-    <Table
-      titles={array('titles', ['Name', 'Surname', 'Age', 'Sex', 'Job', 'id'])}
-      list={object('list', list)}
-    />
+    <Table titles={array('titles', ['Name', 'Surname', 'id'])} list={object('list', list)} />
   ))
 
-  .add('- Default Table with Card', () => (
+  .add('- Default Table with keys and Card', () => (
     <Table
-      titles={array('titles', ['Name', 'Surname', 'Age', 'Sex', 'Job', 'id'])}
+      titles={array('titles', titles)}
+      keys={array('keys', keys)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       list={object('list', list)}
     />
@@ -48,59 +46,24 @@ storiesOf('Table', module)
     />
   ))
 
-  .add('- Responsive Table with custom options', () => (
-    <Table
-      titles={array('titles', titles)}
-      keys={object('keys', [['name', 'surname'], 'age', 'job', 'sex'])}
-      multiLineKeys={boolean('multiLineKeys', true)}
-      breakpoints={array('breakpoints', breakpoints)}
-      priorities={array('priorities', priorities)}
-      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
-      colored={object('colored', { color: '#e1bee7', parity: 'odd' })}
-      center={boolean('center', true)}
-      colWidths={array('colWidths', colWidths)}
-      rowHeight={text('rowHeight', '100px')}
-      list={object('list', list)}
-    />
-  ))
-  .add('- Responsive Table with cutom options and custom empty cell and colored text', () => (
+  .add('- Responsive Table with custom options and custom empty cell and colored text', () => (
     <Table
       titles={array('titles', titles)}
       keys={array('keys', keys)}
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      cardWidth={text('cardWidth', '400px')}
       colored={object('colored', { color: '#e1bee7', parity: 1 })}
       center={boolean('center', false)}
       emptyCellContent={() => <div style={{ color: 'peru', fontWeight: 'bold' }}>NA</div>}
       colWidths={array('colWidths', colWidths)}
-      fontSize={text('fontSize', '20px')}
+      fontSize={text('fontSize', '16px')}
       lineClamp={number('lineClamp', 3)}
-      lineHeight={number('lineHeight', 2)}
-      rowHeight={text('rowHeight', '180px')}
+      lineHeight={number('lineHeight', 2.2)}
+      rowHeight={text('rowHeight', '120px')}
       textColor={color('textColor', '#303f9f')}
-      cellPadding={text('cellPadding', '20px')}
-      list={object('list', list)}
-    />
-  ))
-
-  .add('- Table with Card', () => (
-    <Table
-      titles={array('titles', titles)}
-      keys={array('keys', keys)}
-      breakpoints={array('breakpoints', breakpoints)}
-      priorities={array('priorities', priorities)}
-      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
-      colored={object('colored', { color: '#e1bee7', parity: 1 })}
-      center={boolean('center', false)}
-      emptyCellContent={() => <div style={{ color: 'peru', fontWeight: 'bold' }}>NA</div>}
-      colWidths={array('colWidths', colWidths)}
-      fontSize={text('fontSize', '20px')}
-      lineClamp={number('lineClamp', 3)}
-      lineHeight={number('lineHeight', 2)}
-      rowHeight={text('rowHeight', '180px')}
-      textColor={color('textColor', '#303f9f')}
-      cellPadding={text('cellPadding', '20px')}
+      cellPadding={text('cellPadding', '10px')}
       list={object('list', list)}
     />
   ));

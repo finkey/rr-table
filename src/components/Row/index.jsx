@@ -16,6 +16,7 @@ const Wrapper = styled.div`
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
+  position:relative;
 `;
 
 /** Component */
@@ -109,7 +110,7 @@ Row.propTypes = {
   /** Text font-size */
   fontSize: PropTypes.string,
   /** Row id */
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /** List of the data */
   items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   /** Number of lines before ellipsis */
