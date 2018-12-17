@@ -9,13 +9,13 @@ const Wrapper = styled.div`
   top: 0;
   bottom: 0;
   height: 100vh;
-  width: 400px;
+  width: ${({ cardWidth }) => cardWidth};
   overflow-x: hidden;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
 `;
 
-const CardWrapper = ({ children, isOpen }) => (
-  <Wrapper isOpen={isOpen}>
+const CardWrapper = ({ children, isOpen, cardWidth }) => (
+  <Wrapper isOpen={isOpen} cardWidth={cardWidth}>
     <Slide delay={5000} isOpen={isOpen}>
       {children}
     </Slide>
@@ -23,6 +23,7 @@ const CardWrapper = ({ children, isOpen }) => (
 );
 
 CardWrapper.propTypes = {
+  cardWidth: PropTypes.string,
   children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool,
 };
