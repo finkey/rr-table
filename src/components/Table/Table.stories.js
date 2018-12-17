@@ -53,6 +53,7 @@ storiesOf('Table', module)
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      cardWidth={text('cardWidth', '400px')}
       colored={object('colored', { color: '#e1bee7', parity: 1 })}
       center={boolean('center', false)}
       emptyCellContent={() => <div style={{ color: 'peru', fontWeight: 'bold' }}>NA</div>}

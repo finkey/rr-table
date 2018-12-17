@@ -22,6 +22,8 @@ class Table extends React.Component {
     breakpoints: PropTypes.arrayOf(PropTypes.number),
     /** Render Card Component */
     card: PropTypes.func,
+    /** width of the Card */
+    cardWidth: PropTypes.string,
     /** Cell Padding */
     cellPadding: PropTypes.string,
     /** Center the text in the cell */
@@ -43,7 +45,16 @@ class Table extends React.Component {
     /** Render Head Component */
     head: PropTypes.func,
     /** Keys to display */
-    keys: PropTypes.arrayOf(PropTypes.string),
+    keys: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          display: PropTypes.string.isRequired,
+          replace: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+        }),
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
+    ),
     /** Number of lines before ellipsis */
     lineClamp: PropTypes.number,
     /** Height of a line */
@@ -65,6 +76,10 @@ class Table extends React.Component {
     /** With default Card or not */
     // withCard: PropTypes.bool,
   };
+
+  static defaultProps = {
+    cardWidth: '500px',
+  }
 
   state = {
     cardIsOpen: false,
@@ -92,6 +107,7 @@ class Table extends React.Component {
       // children,
       breakpoints,
       card,
+      cardWidth,
       cellPadding,
       center,
       colWidths,
@@ -160,7 +176,7 @@ class Table extends React.Component {
           })}
 
         {card && (
-          <CardWrapper isOpen={cardIsOpen}>
+          <CardWrapper isOpen={cardIsOpen} cardWidth={cardWidth}>
             {card({ data: cardData, close: this.closeCard })}
           </CardWrapper>
         )}
