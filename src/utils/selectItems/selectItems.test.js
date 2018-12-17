@@ -39,4 +39,27 @@ describe('selectItems', () => {
     const items = selectItems({ data, keys, separator });
     expect(items).toEqual(expected);
   });
+
+  it('should return an array of values of the listed keys - when key is an object it should display the "display" key and if it is undefined display the replacement', () => {
+    const data = {
+      name: 'Anne',
+      surname: 'bella',
+      info: { age: 35, color: 'blue' },
+      company: { job: 'singer' },
+      pets: ['dog', 'cat'],
+      color: undefined,
+    };
+    const keys = [
+      'name',
+      'surname',
+      'info.age',
+      'company.job',
+      { display: 'color', replaceBy: 'info.color' },
+      'pets',
+    ];
+    const separator = ', ';
+    const expected = ['Anne', 'bella', 35, 'singer', 'blue', 'dog, cat'];
+    const items = selectItems({ data, keys, separator });
+    expect(items).toEqual(expected);
+  });
 });

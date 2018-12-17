@@ -11,6 +11,10 @@ const selectItems = ({ data, keys, separator }) => {
       if (Array.isArray(item)) {
         item = item.join(separator || ' - ');
       }
+
+      if (typeof key === 'object') {
+        item = get(key.display)(data) || get(key.replaceBy)(data);
+      }
       items = [...items, item];
       return null;
     });

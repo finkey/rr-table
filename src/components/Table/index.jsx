@@ -43,7 +43,16 @@ class Table extends React.Component {
     /** Render Head Component */
     head: PropTypes.func,
     /** Keys to display */
-    keys: PropTypes.arrayOf(PropTypes.string),
+    keys: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          display: PropTypes.string.isRequired,
+          replace: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+        }),
+        PropTypes.arrayOf(PropTypes.string),
+      ]),
+    ),
     /** Number of lines before ellipsis */
     lineClamp: PropTypes.number,
     /** Height of a line */
