@@ -53,6 +53,7 @@ class Table extends React.Component {
           replace: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
         }),
         PropTypes.arrayOf(PropTypes.string),
+        PropTypes.func,
       ]),
     ),
     /** Number of lines before ellipsis */
