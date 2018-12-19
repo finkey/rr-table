@@ -41,7 +41,7 @@ const DefaultCell = ({
     padding={padding}
     style={style}
   >
-    {text || <EmptyCell>{emptyCellContent}</EmptyCell>}
+    {text || <EmptyCell center={center}>{emptyCellContent}</EmptyCell>}
   </Content>
 );
 

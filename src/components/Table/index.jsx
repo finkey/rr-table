@@ -79,7 +79,7 @@ class Table extends React.Component {
 
   static defaultProps = {
     cardWidth: '500px',
-  }
+  };
 
   state = {
     cardIsOpen: false,
@@ -99,7 +99,7 @@ class Table extends React.Component {
     });
   };
 
-  closeCard = () => this.setState({ cardIsOpen: false, rowId: '' });
+  closeCard = () => this.setState({ cardIsOpen: false, rowId: '' }); /* eslint-disable-line react/no-unused-state */
 
   render() {
     const { cardIsOpen, cardData } = this.state;
@@ -127,6 +127,41 @@ class Table extends React.Component {
       titles,
     } = this.props;
 
+    const selectRowComp = () => {
+      if (!list) {
+        return null;
+      }
+      if (row) {
+        return list.map(data => row({ ...data, id: data.id || uuidv4() }));
+      }
+      return list.map((data, index) => {
+        const id = data.id || uuidv4();
+        const items = selectItems({ data, keys, separator });
+
+        return (
+          <Row
+            breakpoints={breakpoints}
+            cellPadding={cellPadding}
+            center={center}
+            colWidths={colWidths}
+            colored={setBackgroundColor(index, colored)}
+            data={data}
+            emptyCellContent={emptyCellContent}
+            fontSize={fontSize}
+            id={id}
+            items={items}
+            key={id}
+            lineClamp={lineClamp}
+            lineHeight={lineHeight}
+            priorities={priorities}
+            rowHeight={rowHeight}
+            textColor={textColor}
+            toggleCard={this.toggleCard}
+          />
+        );
+      });
+    };
+
     return (
       <TableWrapper>
         {head
@@ -143,37 +178,11 @@ class Table extends React.Component {
             priorities={priorities}
             style={{ boxShadow: '0px 5px 2px #e0e0e0', marginBottom: '5px' }}
             textColor={textColor}
+            toggleCard={() => null}
           />
           )}
 
-        {row
-          ? list.map(data => row({ ...data, id: data.id || uuidv4() }))
-          : list.map((data, index) => {
-            const id = data.id || uuidv4();
-            const items = selectItems({ data, keys, separator });
-
-            return (
-              <Row
-                breakpoints={breakpoints}
-                cellPadding={cellPadding}
-                center={center}
-                colWidths={colWidths}
-                colored={setBackgroundColor(index, colored)}
-                data={data}
-                emptyCellContent={emptyCellContent}
-                fontSize={fontSize}
-                id={id}
-                items={items}
-                key={id}
-                lineClamp={lineClamp}
-                lineHeight={lineHeight}
-                priorities={priorities}
-                rowHeight={rowHeight}
-                textColor={textColor}
-                toggleCard={this.toggleCard}
-              />
-            );
-          })}
+        {selectRowComp()}
 
         {card && (
           <CardWrapper isOpen={cardIsOpen} cardWidth={cardWidth}>

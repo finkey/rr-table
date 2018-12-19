@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
-  position:relative;
+  position: relative;
 `;
 
 /** Component */
@@ -130,7 +130,7 @@ Row.propTypes = {
 };
 
 Row.defaultProps = {
-  rowHeight: '60px',
+  rowHeight: '4em',
 };
 
 export default Row;
