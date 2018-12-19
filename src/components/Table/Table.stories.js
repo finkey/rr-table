@@ -66,6 +66,25 @@ storiesOf('Table', module)
       cellPadding={text('cellPadding', '10px')}
       list={object('list', list)}
     />
+  ))
+
+  .add('- normalize', () => (
+    <Table
+      titles={array('titles', titles)}
+      keys={array('keys', [
+        { display: 'name', normalize: data => data.toUpperCase() },
+        'surname',
+        'info.age',
+        'company.job',
+        'info.sex',
+        data => data.pets && data.pets.join(', ').toUpperCase(),
+      ])}
+      breakpoints={array('breakpoints', breakpoints)}
+      priorities={array('priorities', priorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      list={object('list', list)}
+    />
   ));
 
 // .add('custom row', () => (
