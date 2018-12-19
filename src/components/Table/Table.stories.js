@@ -42,6 +42,7 @@ storiesOf('Table', module)
       priorities={array('priorities', priorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
+      center={boolean('center', false)}
       list={object('list', list)}
     />
   ))
