@@ -10,7 +10,7 @@ import {
 import {
   breakpoints, list, keys, titles, priorities, colWidths,
 } from 'config/storybook/mocks';
-import { Card } from 'config/storybook/components';
+import { Card, Loader } from 'config/storybook/components';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
 // import Card from 'components/Card';
@@ -43,6 +43,8 @@ storiesOf('Table', module)
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
       center={boolean('center', false)}
+      isLoading={boolean('isLoading', false)}
+      loader={Loader}
       list={object('list', list)}
     />
   ))
@@ -78,7 +80,7 @@ storiesOf('Table', module)
         'info.age',
         'company.job',
         'info.sex',
-        data => data.pets && data.pets.join(', ').toUpperCase(),
+        d => d.pets && d.pets.join(', ').toUpperCase(),
       ])}
       breakpoints={array('breakpoints', breakpoints)}
       priorities={array('priorities', priorities)}

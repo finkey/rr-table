@@ -44,6 +44,8 @@ class Table extends React.Component {
     fontSize: PropTypes.string,
     /** Render Head Component */
     head: PropTypes.func,
+    /** Data is loading */
+    isLoading: PropTypes.bool,
     /** Keys to display */
     keys: PropTypes.arrayOf(
       PropTypes.oneOfType([
@@ -62,6 +64,8 @@ class Table extends React.Component {
     lineHeight: PropTypes.number,
     /** List of data to display */
     list: PropTypes.arrayOf(PropTypes.object),
+    /** Component to display when data is loading */
+    loader: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /** List of priorities */
     priorities: PropTypes.arrayOf(PropTypes.number),
     /** Render Row Component */
@@ -116,19 +120,24 @@ class Table extends React.Component {
       emptyCellContent,
       fontSize,
       head,
+      isLoading,
       keys,
       lineClamp,
       lineHeight,
       list,
-      separator,
+      loader: Loader,
       priorities,
       row,
       rowHeight,
+      separator,
       textColor,
       titles,
     } = this.props;
 
     const selectRowComp = () => {
+      if (isLoading && Loader) {
+        return <Loader />;
+      }
       if (!list) {
         return null;
       }
