@@ -10,6 +10,7 @@ import {
 import {
   breakpoints, list, keys, titles, priorities, colWidths,
 } from 'config/storybook/mocks';
+import { StoryWrapper } from 'config/storybook/wrappers';
 import { Card, Loader } from 'config/storybook/components';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
@@ -19,6 +20,9 @@ import Table from './index';
 /** Stories */
 storiesOf('Table', module)
   /** Decorators */
+  .addDecorator(story => (
+    <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
+  ))
   .addDecorator(centered)
 
   .add('- Default Table', () => (

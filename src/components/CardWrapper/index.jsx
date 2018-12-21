@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 
 const CardWrapper = ({ children, isOpen, cardWidth }) => (
   <Wrapper isOpen={isOpen} cardWidth={cardWidth}>
-    <Slide delay={5000} isOpen={isOpen}>
+    <Slide delay={300} isOpen={isOpen}>
       {children}
     </Slide>
   </Wrapper>
