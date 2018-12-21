@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Slide from 'components/animations/Slide';
 
 const Wrapper = styled.div`
+  z-index: 1;
   position: fixed;
   right: 0;
   top: 0;
