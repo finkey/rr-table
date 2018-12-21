@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Slide from 'components/animations/Slide';
 
 const Wrapper = styled.div`
+  z-index: 1;
   position: fixed;
   right: 0;
   top: 0;
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
 
 const CardWrapper = ({ children, isOpen, cardWidth }) => (
   <Wrapper isOpen={isOpen} cardWidth={cardWidth}>
-    <Slide delay={5000} isOpen={isOpen}>
+    <Slide delay={300} isOpen={isOpen}>
       {children}
     </Slide>
   </Wrapper>

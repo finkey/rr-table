@@ -52,7 +52,8 @@ export const list = [
   },
   {
     name: 'Dumond',
-    surname: 'Charlotte haha oui oui la plus belle',
+    surname:
+      'Charlotte Lorem ipsum dolor amet vape cornhole lyft fanny pack, before they sold out subway tile tilde wolf distillery shoreditch. Shabby chic 8-bit brooklyn brunch. Kinfolk live-edge tbh succulents, portland art party cloud bread venmo gentrify hashtag brooklyn yuccie vegan twee fingerstache. Gochujang salvia small batch cold-pressed meggings art party gluten-free, celiac vice fam flexitarian. Franzen tote bag shabby chic synth, tofu ennui single-origin coffee kale chips thundercats affogato lo-fi twee keffiyeh palo santo fam. IPhone yuccie polaroid taxidermy food truck letterpress mlkshk. 8-bit deep v thundercats, XOXO bicycle rights freegan aesthetic meh 3 wolf moon.',
     info: {
       age: 53,
       sex: 'female',
