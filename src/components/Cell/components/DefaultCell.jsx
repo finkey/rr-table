@@ -1,23 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ClampLines from 'react-clamp-lines';
+
 import EmptyCell from './EmptyCell';
 
 /** Style */
 const Content = styled.div`
-  display: block; /* Fallback for non-webkit */
-  max-height: 100%; /* Fallback for non-webkit */
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: ${({ lineClamp }) => lineClamp};
-  display: -webkit-box;
   font-size: ${({ fontSize }) => fontSize};
   line-height: ${({ lineHeight }) => lineHeight};
   margin: 0 auto;
+  max-height: 100%;
   overflow: hidden;
   padding: ${({ padding }) => padding};
+  text-align: ${({ center }) => (center ? 'center' : 'left')};
   text-overflow: ellipsis;
   width: 100%;
-  text-align: ${({ center }) => (center ? 'center' : 'left')};
 `;
 
 /** Component */
@@ -41,7 +39,11 @@ const DefaultCell = ({
     padding={padding}
     style={style}
   >
-    {text || <EmptyCell center={center}>{emptyCellContent}</EmptyCell>}
+    {text ? (
+      <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />
+    ) : (
+      <EmptyCell center={center}>{emptyCellContent}</EmptyCell>
+    )}
   </Content>
 );
 
