@@ -12,6 +12,7 @@ import {
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
 import { Card, Loader } from 'config/storybook/components';
+import { sort } from 'config/storybook/utils';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
 // import Card from 'components/Card';
@@ -77,7 +78,15 @@ storiesOf('Table', module)
 
   .add('- normalize', () => (
     <Table
-      titles={array('titles', titles)}
+      sort={sort}
+      titles={array('titles', [
+        { title: 'Name', sortingKey: 'name' },
+        { title: 'Surname' },
+        { title: 'Age', sortingKey: 'info.age' },
+        'Job',
+        { title: 'Sex', sortingKey: 'info.sex' },
+        'Animaux',
+      ])}
       keys={array('keys', [
         { display: 'name', normalize: data => data.toUpperCase() },
         'surname',

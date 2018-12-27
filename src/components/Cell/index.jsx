@@ -35,9 +35,25 @@ const Cell = ({
   lineHeight,
   padding,
   priority,
+  sort,
   textColor,
   width,
 }) => {
+  const isSortable = typeof sort === 'function'
+    && typeof data === 'object'
+    && typeof data.title === 'string'
+    && typeof data.sortingKey === 'string';
+
+  const defineText = () => {
+    if (typeof data === 'string') {
+      return data;
+    }
+    if (typeof data === 'object' && typeof data.title === 'string') {
+      return data.title;
+    }
+    return null;
+  };
+
   const renderFunctionOrComponentOrDefault = () => {
     if (typeof children === 'function') {
       return children({ data, breakpoints, priority });
@@ -53,7 +69,10 @@ const Cell = ({
         lineClamp={lineClamp}
         lineHeight={lineHeight}
         padding={padding}
-        text={data}
+        sort={sort}
+        sortable={isSortable}
+        sortingKey={isSortable && data.sortingKey}
+        text={defineText()}
       />
     );
   };
@@ -87,7 +106,14 @@ Cell.propTypes = {
   /** Custom styled children to display */
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]), // TODO
   /** Text to display in the cell */
-  data: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  data: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      sortingKey: PropTypes.bool,
+    }),
+  ]),
   /** Text or Component to display when cell is empty */
   emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /** Text font-size */
@@ -102,6 +128,8 @@ Cell.propTypes = {
   padding: PropTypes.string,
   /** Column display priority */
   priority: PropTypes.number,
+  /** sorting function */
+  sort: PropTypes.func,
   /** Color of the displayed text */
   textColor: PropTypes.string,
   /** Cell width */
