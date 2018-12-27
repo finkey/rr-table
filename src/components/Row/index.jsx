@@ -58,7 +58,7 @@ const Row = ({
       return colored;
     }
     if (colored === true) {
-      return lightGrey;
+      return grey;
     }
     return 'transparent';
   };

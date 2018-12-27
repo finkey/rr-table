@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ClampLines from 'react-clamp-lines';
 
 import { ChevronUp, ChevronDown } from 'assets/icons';
-import { lightGrey, grey, primary } from 'config/styles/colorPalette';
+import { grey } from 'config/styles/colorPalette';
 import EmptyCell from './EmptyCell';
 
 /** Style */
