@@ -5,25 +5,35 @@ import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
 
-import { rowDefaultBackgroundColor } from 'config/styles/colors';
+import { lightGrey, grey, primary } from 'config/styles/colorPalette';
 import 'config/styles/default.css';
 
 /** Styles */
 const Wrapper = styled.div`
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundColor, selected }) => (selected ? primary : backgroundColor)};
+  color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
   display: flex;
   flex-wrap: nowrap;
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
   position: relative;
+  border: ${({ rowFeedback }) => rowFeedback && '2px solid transparent'};
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    border: ${({ rowFeedback }) => rowFeedback && `2px solid ${grey}`};
+  }
 `;
 
 /** Component */
 const Row = ({
   breakpoints,
-  center,
   cellPadding,
+  center,
   children,
   colWidths,
   colored,
@@ -35,7 +45,10 @@ const Row = ({
   lineClamp,
   lineHeight,
   priorities,
+  rowFeedback,
   rowHeight,
+  selected,
+  sort,
   style,
   textColor,
   toggleCard,
@@ -45,7 +58,7 @@ const Row = ({
       return colored;
     }
     if (colored === true) {
-      return rowDefaultBackgroundColor;
+      return grey;
     }
     return 'transparent';
   };
@@ -54,6 +67,8 @@ const Row = ({
     <Wrapper
       rowHeight={rowHeight}
       backgroundColor={setBackgroundColor()}
+      rowFeedback={rowFeedback}
+      selected={selected}
       onClick={() => toggleCard({
         breakpoints,
         data,
@@ -81,6 +96,7 @@ const Row = ({
               lineHeight={lineHeight}
               padding={cellPadding}
               priority={priorities && priorities[i]}
+              sort={sort}
               textColor={textColor}
               width={columnWidth && `${columnWidth * 100}%`}
             />
@@ -112,15 +128,30 @@ Row.propTypes = {
   /** Row id */
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /** List of the data */
-  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        sortingKey: PropTypes.string,
+      }),
+    ]),
+  ),
   /** Number of lines before ellipsis */
   lineClamp: PropTypes.number,
   /** Height of a line */
   lineHeight: PropTypes.number,
   /** List of column display priorities */
   priorities: PropTypes.arrayOf(PropTypes.number),
+  /** user feedback */
+  rowFeedback: PropTypes.bool,
   /** Height of the Row */
   rowHeight: PropTypes.string,
+  /** row is selected */
+  selected: PropTypes.bool,
+  /** sorting function */
+  sort: PropTypes.func,
   /** Custom Row style */
   style: PropTypes.object,
   /** Color of the displayed text */
