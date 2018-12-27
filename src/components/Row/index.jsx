@@ -5,25 +5,36 @@ import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
 
-import { rowDefaultBackgroundColor } from 'config/styles/colors';
+import { lightGrey, grey, primary } from 'config/styles/colorPalette';
 import 'config/styles/default.css';
 
 /** Styles */
 const Wrapper = styled.div`
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  background-color: ${({ backgroundColor, selected }) => (selected ? primary : backgroundColor)};
+  color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
   display: flex;
   flex-wrap: nowrap;
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
   position: relative;
+  border: ${({ rowFeedback }) => rowFeedback && '2px solid transparent'};
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    border: ${({ rowFeedback }) => rowFeedback && `2px solid ${grey}`};
+
+  }
 `;
 
 /** Component */
 const Row = ({
   breakpoints,
-  center,
   cellPadding,
+  center,
   children,
   colWidths,
   colored,
@@ -35,7 +46,9 @@ const Row = ({
   lineClamp,
   lineHeight,
   priorities,
+  rowFeedback,
   rowHeight,
+  selected,
   style,
   textColor,
   toggleCard,
@@ -45,7 +58,7 @@ const Row = ({
       return colored;
     }
     if (colored === true) {
-      return rowDefaultBackgroundColor;
+      return lightGrey;
     }
     return 'transparent';
   };
@@ -54,6 +67,8 @@ const Row = ({
     <Wrapper
       rowHeight={rowHeight}
       backgroundColor={setBackgroundColor()}
+      rowFeedback={rowFeedback}
+      selected={selected}
       onClick={() => toggleCard({
         breakpoints,
         data,
@@ -119,8 +134,12 @@ Row.propTypes = {
   lineHeight: PropTypes.number,
   /** List of column display priorities */
   priorities: PropTypes.arrayOf(PropTypes.number),
+  /** user feedback */
+  rowFeedback: PropTypes.bool,
   /** Height of the Row */
   rowHeight: PropTypes.string,
+  /** row is selected */
+  selected: PropTypes.bool,
   /** Custom Row style */
   style: PropTypes.object,
   /** Color of the displayed text */

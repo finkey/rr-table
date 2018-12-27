@@ -89,7 +89,7 @@ class Table extends React.Component {
   state = {
     cardIsOpen: false,
     cardData: {},
-    rowId: '' /* eslint-disable-line react/no-unused-state */,
+    rowId: '',
   };
 
   toggleCard = ({ data, id }) => {
@@ -104,10 +104,10 @@ class Table extends React.Component {
     });
   };
 
-  closeCard = () => this.setState({ cardIsOpen: false, rowId: '' }); /* eslint-disable-line react/no-unused-state */
+  closeCard = () => this.setState({ cardIsOpen: false, rowId: '' }); 
 
   render() {
-    const { cardIsOpen, cardData } = this.state;
+    const { cardIsOpen, cardData, rowId } = this.state;
     const {
       // children,
       breakpoints,
@@ -164,7 +164,9 @@ class Table extends React.Component {
             lineClamp={lineClamp}
             lineHeight={lineHeight}
             priorities={priorities}
+            rowFeedback
             rowHeight={rowHeight}
+            selected={rowId === id}
             textColor={textColor}
             toggleCard={this.toggleCard}
           />
@@ -186,6 +188,7 @@ class Table extends React.Component {
             id="head"
             items={titles}
             priorities={priorities}
+            rowFeedback={false}
             style={{ boxShadow: '0px 5px 2px #e0e0e0', marginBottom: '5px' }}
             textColor={textColor}
             toggleCard={() => null}
