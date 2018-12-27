@@ -45,11 +45,11 @@ const Cell = ({
     && typeof data.sortingKey === 'string';
 
   const defineText = () => {
-    if (typeof data === 'string') {
+    if (typeof data === 'string' || typeof data === 'number') {
       return data;
     }
-    if (typeof data === 'object' && typeof data.title === 'string') {
-      return data.title;
+    if (data && typeof data === 'object') {
+      return data.title && typeof data.title === 'string' && data.title;
     }
     return null;
   };
@@ -71,7 +71,7 @@ const Cell = ({
         padding={padding}
         sort={sort}
         sortable={isSortable}
-        sortingKey={isSortable && data.sortingKey}
+        sortingKey={isSortable ? data.sortingKey : null}
         text={defineText()}
       />
     );
@@ -111,7 +111,7 @@ Cell.propTypes = {
     PropTypes.number,
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      sortingKey: PropTypes.bool,
+      sortingKey: PropTypes.string,
     }),
   ]),
   /** Text or Component to display when cell is empty */
