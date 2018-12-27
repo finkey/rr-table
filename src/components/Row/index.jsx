@@ -26,7 +26,6 @@ const Wrapper = styled.div`
 
   &:hover {
     border: ${({ rowFeedback }) => rowFeedback && `2px solid ${grey}`};
-
   }
 `;
 
@@ -49,6 +48,7 @@ const Row = ({
   rowFeedback,
   rowHeight,
   selected,
+  sort,
   style,
   textColor,
   toggleCard,
@@ -96,6 +96,7 @@ const Row = ({
               lineHeight={lineHeight}
               padding={cellPadding}
               priority={priorities && priorities[i]}
+              sort={sort}
               textColor={textColor}
               width={columnWidth && `${columnWidth * 100}%`}
             />
@@ -127,7 +128,16 @@ Row.propTypes = {
   /** Row id */
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /** List of the data */
-  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        sortingKey: PropTypes.string,
+      }),
+    ]),
+  ),
   /** Number of lines before ellipsis */
   lineClamp: PropTypes.number,
   /** Height of a line */
@@ -140,6 +150,8 @@ Row.propTypes = {
   rowHeight: PropTypes.string,
   /** row is selected */
   selected: PropTypes.bool,
+  /** sorting function */
+  sort: PropTypes.func,
   /** Custom Row style */
   style: PropTypes.object,
   /** Color of the displayed text */

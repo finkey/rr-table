@@ -3,9 +3,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ClampLines from 'react-clamp-lines';
 
+import { ChevronUp, ChevronDown } from 'assets/icons';
+import { lightGrey, grey, primary } from 'config/styles/colorPalette';
 import EmptyCell from './EmptyCell';
 
 /** Style */
+const Wrapper = styled.div`
+  display: flex;
+  max-height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const Content = styled.div`
   font-size: ${({ fontSize }) => fontSize};
   line-height: ${({ lineHeight }) => lineHeight};
@@ -18,6 +28,23 @@ const Content = styled.div`
   width: 100%;
 `;
 
+const SortWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  padding-right: 20px;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+
+  &:hover {
+    color: ${grey};
+  }
+`;
+
 /** Component */
 const DefaultCell = ({
   center,
@@ -27,24 +54,39 @@ const DefaultCell = ({
   lineClamp,
   lineHeight,
   padding,
+  sort,
+  sortable,
+  sortingKey,
   style,
   text,
 }) => (
-  <Content
-    center={center}
-    className={className}
-    fontSize={fontSize}
-    lineClamp={lineClamp}
-    lineHeight={lineHeight}
-    padding={padding}
-    style={style}
-  >
-    {text ? (
-      <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />
-    ) : (
-      <EmptyCell center={center}>{emptyCellContent}</EmptyCell>
+  <Wrapper>
+    <Content
+      center={center}
+      className={className}
+      fontSize={fontSize}
+      lineClamp={lineClamp}
+      lineHeight={lineHeight}
+      padding={padding}
+      style={style}
+    >
+      {text ? (
+        <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />
+      ) : (
+        <EmptyCell center={center}>{emptyCellContent}</EmptyCell>
+      )}
+    </Content>
+    {text && sortable && (
+      <SortWrapper>
+        <IconWrapper onClick={() => sort(sortingKey, 'ASC')}>
+          <ChevronUp width={18} />
+        </IconWrapper>
+        <IconWrapper onClick={() => sort(sortingKey, 'DESC')}>
+          <ChevronDown width={18} />
+        </IconWrapper>
+      </SortWrapper>
     )}
-  </Content>
+  </Wrapper>
 );
 
 /** Prop types */
@@ -63,6 +105,12 @@ DefaultCell.propTypes = {
   lineHeight: PropTypes.number,
   /** Padding */
   padding: PropTypes.string,
+  /** sort function */
+  sort: PropTypes.func,
+  /** is sortable */
+  sortable: PropTypes.bool,
+  /** key of the column to sort by */
+  sortingKey: PropTypes.string,
   /** Custom style */
   style: PropTypes.object,
   /** Text to display in the cell */
@@ -74,6 +122,7 @@ DefaultCell.defaultProps = {
   lineClamp: 2,
   lineHeight: 1.4,
   padding: '4px 10px',
+  sortable: false,
 };
 
 export default DefaultCell;
