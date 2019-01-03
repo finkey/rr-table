@@ -48,6 +48,7 @@ const Row = ({
   rowFeedback,
   rowHeight,
   selected,
+  onSort,
   sort,
   style,
   textColor,
@@ -96,6 +97,7 @@ const Row = ({
               lineHeight={lineHeight}
               padding={cellPadding}
               priority={priorities && priorities[i]}
+              onSort={onSort}
               sort={sort}
               textColor={textColor}
               width={columnWidth && `${columnWidth * 100}%`}
@@ -151,7 +153,12 @@ Row.propTypes = {
   /** row is selected */
   selected: PropTypes.bool,
   /** sorting function */
-  sort: PropTypes.func,
+  onSort: PropTypes.func,
+  /** sorting object */
+  sort: PropTypes.shape({
+    sortingKey: PropTypes.string,
+    order: PropTypes.oneOf(['ASC', 'DESC']),
+  }),
   /** Custom Row style */
   style: PropTypes.object,
   /** Color of the displayed text */
