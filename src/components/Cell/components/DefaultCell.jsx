@@ -63,10 +63,13 @@ const DefaultCell = ({
 }) => {
   // sort comes from the backend, it is an object : {sortingKey: 'blabla', order: 'ASC}
   const onDefaultSort = () => {
-    if (sort.order === 'ASC') {
-      return onSort(sortingKey, 'DESC');
+    if (sort) {
+      if (sort.order === 'ASC') {
+        return onSort(sortingKey, 'DESC');
+      }
+      return onSort(sortingKey, 'ASC');
     }
-    return onSort(sortingKey, 'ASC');
+    return null;
   };
 
   return (
