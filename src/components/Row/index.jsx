@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   transition: all 0.2s ease;
 
   &:hover {
-    border: ${({ rowFeedback }) => rowFeedback && `2px solid ${grey}`};
+    border: ${({ rowFeedback }) => rowFeedback && `2px solid ${primary}`};
   }
 `;
 
