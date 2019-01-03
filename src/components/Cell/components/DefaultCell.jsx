@@ -10,7 +10,7 @@ import EmptyCell from './EmptyCell';
 /** Style */
 const Wrapper = styled.div`
   display: flex;
-  max-height: 100%;
+  height: 100%;
   width: 100%;
   align-items: center;
   justify-content: space-between;
@@ -53,41 +53,62 @@ const DefaultCell = ({
   fontSize,
   lineClamp,
   lineHeight,
+  onSort,
   padding,
   sort,
   sortable,
   sortingKey,
   style,
   text,
-}) => (
-  <Wrapper>
-    <Content
-      center={center}
-      className={className}
-      fontSize={fontSize}
-      lineClamp={lineClamp}
-      lineHeight={lineHeight}
-      padding={padding}
-      style={style}
-    >
-      {text ? (
-        <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />
-      ) : (
-        <EmptyCell center={center}>{emptyCellContent}</EmptyCell>
+}) => {
+  // sort comes from the backend, it is an object : {sortingKey: 'blabla', order: 'ASC}
+  const onDefaultSort = () => {
+    if (sort.order === 'ASC') {
+      return onSort(sortingKey, 'DESC');
+    }
+    return onSort(sortingKey, 'ASC');
+  };
+
+  return (
+    <Wrapper onClick={onDefaultSort}>
+      <Content
+        center={center}
+        className={className}
+        fontSize={fontSize}
+        lineClamp={lineClamp}
+        lineHeight={lineHeight}
+        padding={padding}
+        style={style}
+      >
+        {text ? (
+          <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />
+        ) : (
+          <EmptyCell center={center}>{emptyCellContent}</EmptyCell>
+        )}
+      </Content>
+      {text && sortable && (
+        <SortWrapper>
+          <IconWrapper
+            onClick={(e) => {
+              e.stopPropagation();
+              onSort(sortingKey, 'ASC');
+            }}
+          >
+            <ChevronUp width={18} />
+          </IconWrapper>
+          <IconWrapper
+            onClick={(e) => {
+              e.stopPropagation();
+              onSort(sortingKey, 'DESC');
+            }}
+          >
+            <ChevronDown width={18} />
+          </IconWrapper>
+        </SortWrapper>
       )}
-    </Content>
-    {text && sortable && (
-      <SortWrapper>
-        <IconWrapper onClick={() => sort(sortingKey, 'ASC')}>
-          <ChevronUp width={18} />
-        </IconWrapper>
-        <IconWrapper onClick={() => sort(sortingKey, 'DESC')}>
-          <ChevronDown width={18} />
-        </IconWrapper>
-      </SortWrapper>
-    )}
-  </Wrapper>
-);
+    </Wrapper>
+  );
+};
 
 /** Prop types */
 DefaultCell.propTypes = {
@@ -105,12 +126,17 @@ DefaultCell.propTypes = {
   lineHeight: PropTypes.number,
   /** Padding */
   padding: PropTypes.string,
-  /** sort function */
-  sort: PropTypes.func,
+  /** onSort function */
+  onSort: PropTypes.func,
   /** is sortable */
   sortable: PropTypes.bool,
   /** key of the column to sort by */
   sortingKey: PropTypes.string,
+  /** sorting object */
+  sort: PropTypes.shape({
+    sortingKey: PropTypes.string,
+    order: PropTypes.oneOf(['ASC', 'DESC']),
+  }),
   /** Custom style */
   style: PropTypes.object,
   /** Text to display in the cell */
