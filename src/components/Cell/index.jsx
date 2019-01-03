@@ -35,11 +35,12 @@ const Cell = ({
   lineHeight,
   padding,
   priority,
+  onSort,
   sort,
   textColor,
   width,
 }) => {
-  const isSortable = typeof sort === 'function'
+  const isSortable = typeof onSort === 'function'
     && typeof data === 'object'
     && typeof data.title === 'string'
     && typeof data.sortingKey === 'string';
@@ -69,9 +70,10 @@ const Cell = ({
         lineClamp={lineClamp}
         lineHeight={lineHeight}
         padding={padding}
-        sort={sort}
+        onSort={onSort}
         sortable={isSortable}
         sortingKey={isSortable ? data.sortingKey : null}
+        sort={sort}
         text={defineText()}
       />
     );
@@ -129,7 +131,12 @@ Cell.propTypes = {
   /** Column display priority */
   priority: PropTypes.number,
   /** sorting function */
-  sort: PropTypes.func,
+  onSort: PropTypes.func,
+  /** sorting object */
+  sort: PropTypes.shape({
+    sortingKey: PropTypes.string,
+    order: PropTypes.oneOf(['ASC', 'DESC']),
+  }),
   /** Color of the displayed text */
   textColor: PropTypes.string,
   /** Cell width */

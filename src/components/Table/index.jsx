@@ -75,7 +75,12 @@ class Table extends React.Component {
     /** separator to "join" list of string */
     separator: PropTypes.string,
     /** sorting function */
-    sort: PropTypes.func,
+    onSort: PropTypes.func,
+    /** sorting object */
+    sort: PropTypes.shape({
+      sortingKey: PropTypes.string,
+      order: PropTypes.oneOf(['ASC', 'DESC']),
+    }),
     /** Color of the displayed text */
     textColor: PropTypes.string,
     /** List of Titles of the columns */
@@ -140,6 +145,7 @@ class Table extends React.Component {
       row,
       rowHeight,
       separator,
+      onSort,
       sort,
       textColor,
       titles,
@@ -203,6 +209,7 @@ class Table extends React.Component {
             style={{ boxShadow: '0px 5px 2px #e0e0e0', marginBottom: '5px' }}
             textColor={textColor}
             toggleCard={() => null}
+            onSort={onSort}
             sort={sort}
           />
           )}
