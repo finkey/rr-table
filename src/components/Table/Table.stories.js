@@ -8,10 +8,15 @@ import {
 
 /** Components Import */
 import {
-  breakpoints, list, keys, titles, priorities, colWidths,
+  mockedBreakpoints,
+  mockedColWidths,
+  mockedKeys,
+  mockedList,
+  mockedPriorities,
+  mockedTitles,
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
-import { Card, Loader } from 'config/storybook/components';
+import { Card, Loader, Head } from 'config/storybook/components';
 import { sort } from 'config/storybook/utils';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
@@ -26,53 +31,94 @@ storiesOf('Table', module)
   ))
   .addDecorator(centered)
 
+  /** Stories */
   .add('- Default Table', () => (
-    <Table titles={array('titles', ['Name', 'Surname', 'id'])} list={object('list', list)} />
+    <Table titles={array('titles', ['Name', 'Surname', 'id'])} list={object('list', mockedList)} />
   ))
+
+  .add('- Custom Head (component)', () => (
+    <Table
+      list={object('list', mockedList)}
+      head={<Head titles={array('titles', ['Name', 'Surname', 'id'])} />}
+    />
+  ))
+
+  .add('- Custom Head (function)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      list={object('list', mockedList)}
+      head={Head}
+    />
+  ))
+
+
+  .add('- Custom Head (function  render props)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      list={object('list', mockedList)}
+      head={({ titles }) => (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            backgroundColor: '#9fa8da',
+            height: '3rem',
+          }}
+        >
+          {titles.map(title => (
+            <div>{title}</div>
+          ))}
+        </div>
+      )}
+    />
+  ))
+
+  
+  
 
   .add('- Default Table with keys and Card', () => (
     <Table
-      titles={array('titles', titles)}
-      keys={array('keys', keys)}
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
-      list={object('list', list)}
+      list={object('list', mockedList)}
     />
   ))
 
   .add('- Responsive Table Colored', () => (
     <Table
-      titles={array('titles', titles)}
-      keys={array('keys', keys)}
-      breakpoints={array('breakpoints', breakpoints)}
-      priorities={array('priorities', priorities)}
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
       center={boolean('center', false)}
       isLoading={boolean('isLoading', false)}
       loader={Loader}
-      list={object('list', list)}
+      list={object('list', mockedList)}
     />
   ))
 
   .add('- Responsive Table with custom options and custom empty cell and colored text', () => (
     <Table
-      titles={array('titles', titles)}
-      keys={array('keys', keys)}
-      breakpoints={array('breakpoints', breakpoints)}
-      priorities={array('priorities', priorities)}
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       cardWidth={text('cardWidth', '400px')}
       colored={object('colored', { color: '#e1bee7', parity: 1 })}
       center={boolean('center', false)}
       emptyCellContent={() => <div style={{ color: 'peru', fontWeight: 'bold' }}>NA</div>}
-      colWidths={array('colWidths', colWidths)}
+      colWidths={array('colWidths', mockedColWidths)}
       fontSize={text('fontSize', '16px')}
       lineClamp={number('lineClamp', 3)}
       lineHeight={number('lineHeight', 2.2)}
       rowHeight={text('rowHeight', '120px')}
       textColor={color('textColor', '#303f9f')}
       cellPadding={text('cellPadding', '10px')}
-      list={object('list', list)}
+      list={object('list', mockedList)}
     />
   ))
 
@@ -96,11 +142,11 @@ storiesOf('Table', module)
         'info.sex',
         d => d.pets && d.pets.join(', ').toUpperCase(),
       ])}
-      breakpoints={array('breakpoints', breakpoints)}
-      priorities={array('priorities', priorities)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
-      list={object('list', list)}
+      list={object('list', mockedList)}
     />
   ));
 

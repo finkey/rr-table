@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defineComponent should return a call to the function with the passedProps when component is a function (render props) 1`] = `
+<p>
+  hello
+</p>
+`;
+
+exports[`defineComponent should return a call to the function with the passedProps when component is a function 1`] = `
+.c0 {
+  width: 100%;
+  border: 2px solid #9fa8da;
+  padding: 2rem;
+  color: papayawhip;
+}
+
+<div
+  className="c0"
+  color="papayawhip"
+>
+  hello
+</div>
+`;
+
+exports[`defineComponent should return component when component is an object 1`] = `
+.c0 {
+  width: 100%;
+  border: 2px solid #9fa8da;
+  padding: 2rem;
+  color: papayawhip;
+}
+
+<div
+  className="c0"
+  color="papayawhip"
+>
+  hello
+</div>
+`;
+
+exports[`defineComponent should return default component when component is not provided 1`] = `
+.c0 {
+  width: 100%;
+  border: 2px solid #26a69a;
+  padding: 1rem;
+  color: papayawhip;
+}
+
+<div
+  className="c0"
+  color="papayawhip"
+>
+  hello
+</div>
+`;

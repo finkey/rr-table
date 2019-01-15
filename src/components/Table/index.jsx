@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
-import { setBackgroundColor, selectItems } from 'utils';
+import { setBackgroundColor, selectItems, defineComponent } from 'utils';
 import CardWrapper from 'components/CardWrapper';
 import Row from 'components/Row';
-// import Card from 'components/Card';
+import Head from 'components/Head';
 import 'config/styles/default.css';
 
 /** Styles */
@@ -81,6 +81,14 @@ class Table extends React.Component {
       sortingKey: PropTypes.string,
       order: PropTypes.oneOf(['ASC', 'DESC']),
     }),
+    /** Custom styles */
+    styles: PropTypes.shape({
+      cell: PropTypes.object,
+      head: PropTypes.object,
+      headCell: PropTypes.object,
+      row: PropTypes.object,
+      table: PropTypes.object,
+    }),
     /** Color of the displayed text */
     textColor: PropTypes.string,
     /** List of Titles of the columns */
@@ -124,7 +132,6 @@ class Table extends React.Component {
   render() {
     const { cardIsOpen, cardData, rowId } = this.state;
     const {
-      // children,
       breakpoints,
       card,
       cardWidth,
@@ -141,12 +148,13 @@ class Table extends React.Component {
       lineHeight,
       list,
       loader: Loader,
+      onSort,
       priorities,
       row,
       rowHeight,
       separator,
-      onSort,
       sort,
+      styles,
       textColor,
       titles,
     } = this.props;
@@ -190,29 +198,42 @@ class Table extends React.Component {
         );
       });
     };
+    console.log('typeof head:', typeof head);
+    // console.log('head children:', head({ titles, breakpoints, priorities }).props.children);
+    console.log('head:', head);
+
+    const passedProps = {
+      breakpoints,
+      cellPadding,
+      center,
+      colWidths,
+      titles,
+      onSort,
+      priorities,
+      sort,
+      textColor,
+    };
+
+    const defaultComp = (
+      <Head
+        breakpoints={breakpoints}
+        cellPadding={cellPadding}
+        center={center}
+        colWidths={colWidths}
+        fontSize={fontSize}
+        id="head-row"
+        titles={titles}
+        onSort={onSort}
+        priorities={priorities}
+        sort={sort}
+        style={styles && styles.head}
+        textColor={textColor}
+      />
+    );
 
     return (
-      <TableWrapper>
-        {head
-          ? head({ titles, breakpoints, priorities })
-          : titles && (
-          <Row
-            breakpoints={breakpoints}
-            cellPadding={cellPadding}
-            center={center}
-            colWidths={colWidths}
-            fontSize={fontSize}
-            id="head"
-            items={titles}
-            priorities={priorities}
-            rowFeedback={false}
-            style={{ boxShadow: '0px 5px 2px #e0e0e0', marginBottom: '5px' }}
-            textColor={textColor}
-            toggleCard={() => null}
-            onSort={onSort}
-            sort={sort}
-          />
-          )}
+      <TableWrapper style={styles && styles.table}>
+        {defineComponent({ component: head, passedProps, defaultComp })}
 
         {selectRowComp()}
 
