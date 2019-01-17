@@ -9,6 +9,8 @@ import Row from 'components/Row';
 import Head from 'components/Head';
 import 'config/styles/default.css';
 
+import bla from 'utils/bla';
+
 /** Styles */
 const TableWrapper = styled.div`
   width: 100%;
@@ -43,7 +45,11 @@ class Table extends React.Component {
     /** Text font-size */
     fontSize: PropTypes.string,
     /** Render Head Component */
-    head: PropTypes.func,
+    head: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    /** Height of the Head row */
+    headHeight: PropTypes.string,
+    /** Render HeadCell Component */
+    headCell: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     /** Data is loading */
     isLoading: PropTypes.bool,
     /** Keys to display */
@@ -142,6 +148,8 @@ class Table extends React.Component {
       emptyCellContent,
       fontSize,
       head,
+      headHeight,
+      headCell,
       isLoading,
       keys,
       lineClamp,
@@ -158,7 +166,53 @@ class Table extends React.Component {
       textColor,
       titles,
     } = this.props;
+    console.log('-- typeof default Head:', typeof Head);
+    // console.log('-- Head children:', typeof Head({ height: '2rem' }));
+    // const Comp = bla(head, Head);
+    console.log('-- isValidElement:', React.isValidElement(head));
+    console.log('-- typeof head:', typeof head);
 
+    // console.log('-- Comp:', Comp);
+
+    /** Head Component */
+    const propsPassedToHeadComponent = {
+      breakpoints,
+      cellPadding,
+      center,
+      colWidths,
+      headCell,
+      headHeight,
+      onSort,
+      priorities,
+      sort,
+      textColor,
+      titles,
+    };
+
+    const defaultHeadComponent = (
+      <Head
+        breakpoints={breakpoints}
+        cellPadding={cellPadding}
+        center={center}
+        colWidths={colWidths}
+        fontSize={fontSize}
+        id="head-row"
+        titles={titles}
+        onSort={onSort}
+        priorities={priorities}
+        sort={sort}
+        style={styles && styles.head}
+        textColor={textColor}
+      />
+    );
+
+    const headComponent = defineComponent({
+      component: head,
+      passedProps: propsPassedToHeadComponent,
+      defaultComp: defaultHeadComponent,
+    });
+
+    /** Row Component */
     const selectRowComp = () => {
       if (isLoading && Loader) {
         return <Loader />;
@@ -198,42 +252,13 @@ class Table extends React.Component {
         );
       });
     };
-    console.log('typeof head:', typeof head);
-    // console.log('head children:', head({ titles, breakpoints, priorities }).props.children);
-    console.log('head:', head);
-
-    const passedProps = {
-      breakpoints,
-      cellPadding,
-      center,
-      colWidths,
-      titles,
-      onSort,
-      priorities,
-      sort,
-      textColor,
-    };
-
-    const defaultComp = (
-      <Head
-        breakpoints={breakpoints}
-        cellPadding={cellPadding}
-        center={center}
-        colWidths={colWidths}
-        fontSize={fontSize}
-        id="head-row"
-        titles={titles}
-        onSort={onSort}
-        priorities={priorities}
-        sort={sort}
-        style={styles && styles.head}
-        textColor={textColor}
-      />
-    );
-
+    console.log('headCell:', typeof headCell);
+    /** render */
     return (
       <TableWrapper style={styles && styles.table}>
-        {defineComponent({ component: head, passedProps, defaultComp })}
+        {<Head titles={['hello', 'haha']} height="2rem" />}
+        {/* <p>haha</p>
+        {headComponent} */}
 
         {selectRowComp()}
 

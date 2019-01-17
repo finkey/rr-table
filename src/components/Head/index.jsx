@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import uuidv4 from 'uuid/v4';
 
+import { defineComponent, defineComponentAsFunction } from 'utils';
 import { grey } from 'config/styles/colorPalette';
 import HeadCell from 'components/HeadCell';
 
@@ -18,15 +20,24 @@ const Wrapper = styled.div`
 `;
 
 /** Component */
+
 const Head = ({
   height, style, titles, id,
 }) => {
-  console.log('hello');
+  /** Cell Component */
+  // const setCell = defineComponentAsFunction(headCell, HeadCell);
+
+  // console.log('setCell:', typeof setCell);
+  // console.log('titles:', titles);
+
   return (
     <Wrapper height={height} style={style} id={id}>
-      {titles.map(title => (
-        <HeadCell text={title} />
-      ))}
+      {titles
+        && titles.map((title) => {
+          const cellId = uuidv4();
+          return <HeadCell key={cellId} id={cellId} text={title} />;
+          // return setCell({ title, key: cellId, id: cellId });
+        })}
     </Wrapper>
   );
 };
@@ -35,6 +46,8 @@ const Head = ({
 Head.propTypes = {
   /** id of the row */
   id: PropTypes.string,
+  /** Header Cells Component */
+  headCell: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   /** Height of the Head row */
   height: PropTypes.string,
   /** Custom row style */

@@ -16,15 +16,17 @@ import {
   mockedTitles,
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
-import { Card, Loader, Head } from 'config/storybook/components';
+import {
+  Card, Loader, Head, HeadCell,
+} from 'config/storybook/components';
 import { sort } from 'config/storybook/utils';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
 // import Card from 'components/Card';
 import Table from './index';
 
-/** Stories */
-storiesOf('Table', module)
+/** Stories of Default Table */
+storiesOf('- Table -|1 - Default', module)
   /** Decorators */
   .addDecorator(story => (
     <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
@@ -35,46 +37,6 @@ storiesOf('Table', module)
   .add('- Default Table', () => (
     <Table titles={array('titles', ['Name', 'Surname', 'id'])} list={object('list', mockedList)} />
   ))
-
-  .add('- Custom Head (component)', () => (
-    <Table
-      list={object('list', mockedList)}
-      head={<Head titles={array('titles', ['Name', 'Surname', 'id'])} />}
-    />
-  ))
-
-  .add('- Custom Head (function)', () => (
-    <Table
-      titles={array('titles', ['Name', 'Surname', 'id'])}
-      list={object('list', mockedList)}
-      head={Head}
-    />
-  ))
-
-
-  .add('- Custom Head (function  render props)', () => (
-    <Table
-      titles={array('titles', ['Name', 'Surname', 'id'])}
-      list={object('list', mockedList)}
-      head={({ titles }) => (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            backgroundColor: '#9fa8da',
-            height: '3rem',
-          }}
-        >
-          {titles.map(title => (
-            <div>{title}</div>
-          ))}
-        </div>
-      )}
-    />
-  ))
-
-  
-  
 
   .add('- Default Table with keys and Card', () => (
     <Table
@@ -149,6 +111,125 @@ storiesOf('Table', module)
       list={object('list', mockedList)}
     />
   ));
+
+/** Stories of Table with custom Head */
+storiesOf('- Table -|2 - Custom Head', module)
+  /** Decorators */
+  .addDecorator(story => (
+    <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
+  ))
+  .addDecorator(centered)
+
+  /** Stories */
+  .add('- Custom Head (component)', () => (
+    <Table
+      head={object('head', <Head titles={array('titles', ['Name', 'Surname', 'id'])} />)}
+      list={object('list', mockedList)}
+    />
+  ))
+
+  .add('- Custom Head (component function)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      list={object('list', mockedList)}
+      head={Head}
+    />
+  ))
+
+  .add('- Custom Head (function render props)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      list={object('list', mockedList)}
+      head={({ titles }) => (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            backgroundColor: '#c5e1a5',
+            height: '3rem',
+          }}
+        >
+          {titles.map(title => (
+            <div>{title}</div>
+          ))}
+        </div>
+      )}
+    />
+  ));
+
+/** Stories of Table with custom HeadCell */
+storiesOf('- Table -|3 - Custom HeadCell', module)
+  /** Decorators */
+  .addDecorator(story => (
+    <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
+  ))
+  .addDecorator(centered)
+
+  /** Stories */
+  .add('- Custom HeadCell (component)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      headCell={object('head', <HeadCell />)}
+      list={object('list', mockedList)}
+    />
+  ))
+
+  .add('- Custom HeadCell (component function)', () => (
+    <Table
+      headCell={HeadCell}
+      titles={object('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      list={object('list', mockedList)}
+    />
+  ))
+
+  .add('- Custom HeadCell (function render props)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      list={object('list', mockedList)}
+      headCell={({ title }) => <HeadCell>{title}</HeadCell>}
+    />
+  ))
+
+  .add('- Custom Head with custom HeadCell (function render props)', () => (
+    <Table
+      titles={array('titles', ['Name', 'Surname', 'id'])}
+      list={object('list', mockedList)}
+      head={Head}
+      headCell={({ title }) => <HeadCell>{title}</HeadCell>}
+    />
+  ));
+
+// .add('- Custom Head (function)', () => (
+//   <Table
+//     titles={array('titles', ['Name', 'Surname', 'id'])}
+//     list={object('list', mockedList)}
+//     head={Head}
+//   />
+// ))
+
+// .add('- Custom Head (function  render props)', () => (
+//   <Table
+//     titles={array('titles', ['Name', 'Surname', 'id'])}
+//     list={object('list', mockedList)}
+//     head={({ titles }) => (
+//       <div
+//         style={{
+//           display: 'flex',
+//           justifyContent: 'space-between',
+//           backgroundColor: '#9fa8da',
+//           height: '3rem',
+//         }}
+//       >
+//         {titles.map(title => (
+//           <div>{title}</div>
+//         ))}
+//       </div>
+//     )}
+//   />
+// ));
+
+// --------------------------------------
 
 // .add('custom row', () => (
 //   <Table

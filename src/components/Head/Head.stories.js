@@ -8,7 +8,11 @@ import {
 
 /** Components Import */
 import {
-  breakpoints, colWidths, items, priorities,
+  breakpoints,
+  colWidths,
+  mockedItems,
+  priorities,
+  mockedTitles,
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
 // import Cell from 'components/Cell';
@@ -31,21 +35,28 @@ storiesOf('Components|Head', module)
   /** Stories */
   .add(
     '- Default Head',
-    () => <Head titles={array('items', items)} id={text('id', 'header-row')} />,
+    () => <Head titles={array('titles', mockedTitles)} id={text('id', 'header-row')} />,
     {
       notes: { markdown: readme },
     },
   )
 
   .add(
-    '- Responsive Head',
-    () => (
-      <Head
-        id={text('id', 'header-row')}
-        titles={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
-      />
-    ),
-    { notes: { markdown: readme } },
+    '- Custom Head Cells',
+    () => <Head titles={array('titles', mockedTitles)} id={text('id', 'header-row')} />,
+    {
+      notes: { markdown: readme },
+    },
   );
+// .add(
+//   '- Responsive Head',
+//   () => (
+//     <Head
+//       id={text('id', 'header-row')}
+//       titles={array('items', items)}
+//       breakpoints={array('breakpoints', breakpoints)}
+//       priorities={array('priorities', priorities)}
+//     />
+//   ),
+//   { notes: { markdown: readme } },
+// );
