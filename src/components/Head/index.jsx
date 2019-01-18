@@ -18,6 +18,8 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   align-items: center;
+  border: 5px solid green;
+  box-sizing: border-box;
 `;
 
 /** Component */
@@ -33,23 +35,24 @@ const Head = ({
   onSort,
   priorities,
   sort,
-  style,
+  styles,
   textColor,
   titles,
 }) => {
   const Cell = defineComponentAsFunction(headCell, HeadCell);
   return (
-    <Wrapper height={height} style={style} id={id}>
+    <Wrapper height={height} style={styles && styles.head} id={id}>
       {titles
         && titles.map((title, i) => Cell({
           breakpoints,
-          cellPadding,
+          padding: cellPadding,
           center,
           fontSize,
-          id: uuidv4(),
+          key: uuidv4(),
           onSort,
           priority: priorities && priorities[i],
           sort,
+          style: styles && styles.headCell,
           textColor,
           title,
           width: colWidths && `${colWidths[i] * 100}%`,
@@ -85,8 +88,14 @@ Head.propTypes = {
     sortingKey: PropTypes.string,
     order: PropTypes.oneOf(['ASC', 'DESC']),
   }),
-  /** Custom row style */
-  style: PropTypes.object,
+  /** Custom styles */
+  styles: PropTypes.shape({
+    cell: PropTypes.object,
+    head: PropTypes.object,
+    headCell: PropTypes.object,
+    row: PropTypes.object,
+    table: PropTypes.object,
+  }),
   /** Color of the displayed text */
   textColor: PropTypes.string,
   /** Column Titles */

@@ -19,7 +19,7 @@ import { StoryWrapper } from 'config/storybook/wrappers';
 import {
   Card, Loader, Head, HeadCell,
 } from 'config/storybook/components';
-import { sort } from 'config/storybook/utils';
+import { onSort } from 'config/storybook/utils';
 // import Row from 'components/Row';
 // import Cell from 'components/Cell';
 // import Card from 'components/Card';
@@ -34,11 +34,11 @@ storiesOf('- Table -|1 - Default', module)
   .addDecorator(centered)
 
   /** Stories */
-  .add('- Default Table', () => (
+  .add('1 - Default Table', () => (
     <Table titles={array('titles', ['Name', 'Surname', 'id'])} list={object('list', mockedList)} />
   ))
 
-  .add('- Default Table with keys and Card', () => (
+  .add('2 - Default Table with keys and Card', () => (
     <Table
       titles={array('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
@@ -47,7 +47,7 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('- Responsive Table Colored', () => (
+  .add('3 - Responsive Table Colored', () => (
     <Table
       titles={array('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
@@ -62,7 +62,7 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('- Responsive Table with custom options and custom empty cell and colored text', () => (
+  .add('4 - Responsive Table with custom options and custom empty cell and colored text', () => (
     <Table
       titles={array('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
@@ -84,9 +84,9 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('- normalize', () => (
+  .add('5 - normalize', () => (
     <Table
-      onSort={sort}
+      onSort={onSort}
       sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
       titles={array('titles', [
         { title: 'Name', sortingKey: 'name' },

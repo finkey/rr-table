@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
-import { setBackgroundColor, selectItems, defineComponent } from 'utils';
+import { setBackgroundColor, selectItems, defineComponentAsFunction } from 'utils';
 import CardWrapper from 'components/CardWrapper';
 import Row from 'components/Row';
 import Head from 'components/Head';
@@ -104,8 +104,6 @@ class Table extends React.Component {
         }),
       ]),
     ),
-    /** With default Card or not */
-    // withCard: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -145,8 +143,8 @@ class Table extends React.Component {
       emptyCellContent,
       fontSize,
       head,
-      headHeight,
       headCell,
+      headHeight,
       isLoading,
       keys,
       lineClamp,
@@ -163,14 +161,10 @@ class Table extends React.Component {
       textColor,
       titles,
     } = this.props;
-    console.log('-- typeof default Head:', typeof Head);
-    // console.log('-- Head children:', typeof Head({ height: '2rem' }));
-    console.log('-- isValidElement:', React.isValidElement(head));
-    console.log('-- typeof head:', typeof head);
-
-    // console.log('-- Comp:', Comp);
 
     /** Head Component */
+    const HeadComponent = defineComponentAsFunction(head, Head);
+
     const propsPassedToHeadComponent = {
       breakpoints,
       cellPadding,
@@ -184,29 +178,6 @@ class Table extends React.Component {
       textColor,
       titles,
     };
-
-    const defaultHeadComponent = (
-      <Head
-        breakpoints={breakpoints}
-        cellPadding={cellPadding}
-        center={center}
-        colWidths={colWidths}
-        fontSize={fontSize}
-        id="head-row"
-        titles={titles}
-        onSort={onSort}
-        priorities={priorities}
-        sort={sort}
-        style={styles && styles.head}
-        textColor={textColor}
-      />
-    );
-
-    const headComponent = defineComponent({
-      component: head,
-      passedProps: propsPassedToHeadComponent,
-      defaultComp: defaultHeadComponent,
-    });
 
     /** Row Component */
     const selectRowComp = () => {
@@ -248,13 +219,11 @@ class Table extends React.Component {
         );
       });
     };
-    console.log('headCell:', typeof headCell);
+
     /** render */
     return (
       <TableWrapper style={styles && styles.table}>
-        {<Head titles={['hello', 'haha']} height="2rem" />}
-        {/* <p>haha</p>
-        {headComponent} */}
+        {HeadComponent(propsPassedToHeadComponent)}
 
         {selectRowComp()}
 
