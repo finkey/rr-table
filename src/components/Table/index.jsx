@@ -9,8 +9,6 @@ import Row from 'components/Row';
 import Head from 'components/Head';
 import 'config/styles/default.css';
 
-import bla from 'utils/bla';
-
 /** Styles */
 const TableWrapper = styled.div`
   width: 100%;
@@ -19,7 +17,6 @@ const TableWrapper = styled.div`
 /** Component */
 class Table extends React.Component {
   static propTypes = {
-    // children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
     /** List of breakpoints */
     breakpoints: PropTypes.arrayOf(PropTypes.number),
     /** Render Card Component */
@@ -168,7 +165,6 @@ class Table extends React.Component {
     } = this.props;
     console.log('-- typeof default Head:', typeof Head);
     // console.log('-- Head children:', typeof Head({ height: '2rem' }));
-    // const Comp = bla(head, Head);
     console.log('-- isValidElement:', React.isValidElement(head));
     console.log('-- typeof head:', typeof head);
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const HeadCell = ({ text }) => {
+const HeadCell = ({ title }) => {
   console.log('HeadCell');
-  return <div>{text}</div>;
+  return <div>{title}</div>;
 };
 
 HeadCell.propTypes = {
-  text: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default HeadCell;

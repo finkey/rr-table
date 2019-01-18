@@ -12,8 +12,8 @@ const Wrapper = styled.div`
   color: pink;
 `;
 
-const HeadCell = ({ titles }) => (
-  <Wrapper>{titles ? titles.map(title => <div>{title}</div>) : <p>no title</p>}</Wrapper>
+const HeadCell = ({ title, id }) => (
+  <Wrapper key={id}>{title ? <div>{title}</div> : <p>no title</p>}</Wrapper>
 );
 
 export default HeadCell;

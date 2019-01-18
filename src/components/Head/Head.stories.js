@@ -2,20 +2,17 @@ import React from 'react';
 /** Storybook Import */
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import {
-  array, boolean, color, number, object, text,
-} from '@storybook/addon-knobs';
+import { array, boolean, text } from '@storybook/addon-knobs';
 
 /** Components Import */
 import {
-  breakpoints,
-  colWidths,
-  mockedItems,
-  priorities,
+  mockedBreakpoints,
+  mockedColWidths,
+  mockedPriorities,
   mockedTitles,
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
-// import Cell from 'components/Cell';
+import HeadCell from 'config/storybook/components/HeadCell';
 import Head from './index';
 import readme from './README.md';
 
@@ -34,29 +31,51 @@ storiesOf('Components|Head', module)
 
   /** Stories */
   .add(
-    '- Default Head',
-    () => <Head titles={array('titles', mockedTitles)} id={text('id', 'header-row')} />,
+    '1 - Default Head',
+    () => (
+      <Head
+        titles={array('titles', mockedTitles)}
+        id={text('id', 'header-row')}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
+        colWidths={array('colWidths', mockedColWidths)}
+      />
+    ),
     {
       notes: { markdown: readme },
     },
   )
 
   .add(
-    '- Custom Head Cells',
-    () => <Head titles={array('titles', mockedTitles)} id={text('id', 'header-row')} />,
+    '2 - Custom Head Cells',
+    () => (
+      <Head
+        titles={array('titles', mockedTitles)}
+        id={text('id', 'header-row')}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
+        colWidths={array('colWidths', mockedColWidths)}
+        headCell={HeadCell}
+      />
+    ),
+    {
+      notes: { markdown: readme },
+    },
+  )
+
+  .add(
+    '3 - Custom Head Cells (render props)',
+    () => (
+      <Head
+        titles={array('titles', mockedTitles)}
+        id={text('id', 'header-row')}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
+        colWidths={array('colWidths', mockedColWidths)}
+        headCell={props => <HeadCell {...props} />}
+      />
+    ),
     {
       notes: { markdown: readme },
     },
   );
-// .add(
-//   '- Responsive Head',
-//   () => (
-//     <Head
-//       id={text('id', 'header-row')}
-//       titles={array('items', items)}
-//       breakpoints={array('breakpoints', breakpoints)}
-//       priorities={array('priorities', priorities)}
-//     />
-//   ),
-//   { notes: { markdown: readme } },
-// );

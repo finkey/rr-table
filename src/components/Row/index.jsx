@@ -5,7 +5,7 @@ import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
 
-import { lightGrey, grey, primary } from 'config/styles/colorPalette';
+import { grey, primary } from 'config/styles/colorPalette';
 import 'config/styles/default.css';
 
 /** Styles */
@@ -95,9 +95,9 @@ const Row = ({
               key={cellId}
               lineClamp={lineClamp}
               lineHeight={lineHeight}
+              onSort={onSort}
               padding={cellPadding}
               priority={priorities && priorities[i]}
-              onSort={onSort}
               sort={sort}
               textColor={textColor}
               width={columnWidth && `${columnWidth * 100}%`}

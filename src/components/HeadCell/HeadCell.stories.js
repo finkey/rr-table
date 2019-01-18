@@ -27,6 +27,6 @@ storiesOf('Components|HeadCell', module)
   /** Stories */
   .add(
     '- Default HeadCell',
-    () => <HeadCell text={text('text', SAMPLE_TEXT)} handleClick={action('cell clicked')} />,
+    () => <HeadCell title={text('title', SAMPLE_TEXT)} handleClick={action('cell clicked')} />,
     { notes: { markdown: readme } },
   );
