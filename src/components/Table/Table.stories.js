@@ -87,7 +87,7 @@ storiesOf('- Table -|1 - Default', module)
   .add('5 - normalize', () => (
     <Table
       onSort={onSort}
-      sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
+      // sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
       titles={array('titles', [
         { title: 'Name', sortingKey: 'name' },
         { title: 'Surname' },
