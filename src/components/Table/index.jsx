@@ -174,7 +174,7 @@ class Table extends React.Component {
       headHeight,
       onSort,
       priorities,
-      sort,
+      sortingState: sort,
       textColor,
       titles,
     };

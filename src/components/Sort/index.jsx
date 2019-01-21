@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { grey } from 'config/styles/colorPalette';
 import { ChevronUp, ChevronDown } from 'assets/icons';
+import { ASC, DESC } from 'config/constants/sortOrders';
 
 /** Styles */
 const SortWrapper = styled.div`
@@ -26,26 +27,27 @@ const IconWrapper = styled.div`
 const ICON_WIDTH = 18;
 
 /** Component */
-const Sort = ({ onSort, sortingKey }) => (
-  <SortWrapper>
-    <IconWrapper
-      onClick={(e) => {
-        e.stopPropagation();
-        onSort(sortingKey, 'ASC');
-      }}
-    >
-      <ChevronUp width={ICON_WIDTH} />
-    </IconWrapper>
-    <IconWrapper
-      onClick={(e) => {
-        e.stopPropagation();
-        onSort(sortingKey, 'DESC');
-      }}
-    >
-      <ChevronDown width={ICON_WIDTH} />
-    </IconWrapper>
-  </SortWrapper>
-);
+const Sort = ({ onSort, sortingKey }) => {
+  const handleSortASC = (e) => {
+    e.stopPropagation();
+    onSort(sortingKey, ASC);
+  };
+
+  const handleSortDESC = (e) => {
+    e.stopPropagation();
+    onSort(sortingKey, DESC);
+  };
+  return (
+    <SortWrapper>
+      <IconWrapper onClick={handleSortASC}>
+        <ChevronUp width={ICON_WIDTH} />
+      </IconWrapper>
+      <IconWrapper onClick={handleSortDESC}>
+        <ChevronDown width={ICON_WIDTH} />
+      </IconWrapper>
+    </SortWrapper>
+  );
+};
 
 /** Props Types */
 Sort.propTypes = {
