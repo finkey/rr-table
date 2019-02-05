@@ -5,7 +5,7 @@ import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
 
-import { grey, primary } from 'config/styles/colorPalette';
+import { grey, primary, lightGrey } from 'config/styles/colorPalette';
 import 'config/styles/default.css';
 
 /** Styles */
@@ -17,15 +17,15 @@ const Wrapper = styled.div`
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
-  position: relative;
-  border: ${({ rowFeedback }) => rowFeedback && '2px solid transparent'};
-
+  // position: relative;
   box-sizing: border-box;
+  cursor: pointer;
 
   transition: all 0.2s ease;
 
   &:hover {
-    border: ${({ rowFeedback }) => rowFeedback && `2px solid ${primary}`};
+    background-color: ${({ rowFeedback, selected }) => rowFeedback && !selected && lightGrey};
+    color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
   }
 `;
 
