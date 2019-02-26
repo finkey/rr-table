@@ -102,6 +102,34 @@ storiesOf('Table', module)
       colored={boolean('colored', true)}
       list={object('list', list)}
     />
+  ))
+
+  .add('- with html', () => (
+    <Table
+      onSort={sort}
+      sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
+      titles={array('titles', [
+        { title: 'Name', sortingKey: 'name' },
+        { title: 'Surname' },
+        { title: 'Age', sortingKey: 'info.age' },
+        'Job',
+        { title: 'Sex', sortingKey: 'info.sex' },
+        'Animaux',
+      ])}
+      keys={array('keys', [
+        { display: 'name', normalize: data => data.toUpperCase() },
+        'surname',
+        'info.age',
+        'company.job',
+        'info.sex',
+        d => <button type="button" onClick={(e) => { e.stopPropagation(); }}>{d.info.sex}</button>,
+      ])}
+      breakpoints={array('breakpoints', breakpoints)}
+      priorities={array('priorities', priorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      list={object('list', list)}
+    />
   ));
 
 // .add('custom row', () => (
