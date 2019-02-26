@@ -202,7 +202,7 @@ storiesOf('- Table -|3 - Custom HeadCell', module)
 
   .add('- with html', () => (
     <Table
-      onSort={sort}
+      onSort={onSort}
       sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
       titles={array('titles', [
         { title: 'Name', sortingKey: 'name' },
@@ -220,11 +220,11 @@ storiesOf('- Table -|3 - Custom HeadCell', module)
         'info.sex',
         d => <button type="button" onClick={(e) => { e.stopPropagation(); }}>{d.info.sex}</button>,
       ])}
-      breakpoints={array('breakpoints', breakpoints)}
-      priorities={array('priorities', priorities)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
-      list={object('list', list)}
+      list={object('list', mockedList)}
     />
   ));
 
