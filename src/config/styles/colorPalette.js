@@ -1,6 +1,7 @@
 const palette = {
-  lightGrey: '#fafafa',
-  grey: '#e5eaee',
+  lighterGrey: '#fafafa',
+  lightGrey: '#e0e0e0',
+  grey: '#eeeeee',
   primary: '#004c64',
 };
 

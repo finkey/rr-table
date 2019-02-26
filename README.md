@@ -6,9 +6,11 @@ Responsive and customizable [React](https://reactjs.org/) Table component.
 
 ## User Guide
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contribute](#contribute)
+- [React Responsive Table](#react-responsive-table)
+  - [User Guide](#user-guide)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Contribute](#contribute)
 
 ### Installation
 
@@ -36,13 +38,7 @@ export default () => (
         onArchiveClick={this.onArchiveClick}
       />
     )}
-    titles={[
-      intl.formatMessage(messages.companyName),
-      intl.formatMessage(messages.directorName),
-      intl.formatMessage(messages.businessProvider),
-      intl.formatMessage(messages.projectType),
-      intl.formatMessage(messages.financingNeeds)
-    ]}
+    titles={["Entreprise", "Nom", "Apporteur d'affaires", "Type de projet"]}
     keys={[
       {
         display: "company.name",

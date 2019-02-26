@@ -14,7 +14,6 @@ const CellWrapper = styled.div`
   align-items: center;
   background-color: ${({ backgroundColor }) => backgroundColor};
   color: ${({ color }) => color};
-  cursor: ${({ cursor }) => cursor};
   display: flex;
   height: 100%;
   justify-content: flex-start;
@@ -85,7 +84,6 @@ const Cell = ({
         <CellWrapper
           backgroundColor={backgroundColor}
           color={textColor}
-          cursor={handleClick ? 'pointer' : 'default'}
           onClick={handleClick}
           width={width}
         >
