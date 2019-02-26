@@ -72,6 +72,18 @@ const DefaultCell = ({
     return null;
   };
 
+  const renderData = (data) => {
+    if (data) {
+      if (React.isValidElement(data)) {
+        return data;
+      }
+
+      return <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />;
+    }
+
+    return <EmptyCell center={center}>{emptyCellContent}</EmptyCell>;
+  };
+
   return (
     <Wrapper onClick={onDefaultSort}>
       <Content
@@ -83,11 +95,7 @@ const DefaultCell = ({
         padding={padding}
         style={style}
       >
-        {text ? (
-          <ClampLines text={text.toString()} lines={lineClamp} buttons={false} delay={0} />
-        ) : (
-          <EmptyCell center={center}>{emptyCellContent}</EmptyCell>
-        )}
+        {renderData(text)}
       </Content>
       {text && sortable && (
         <SortWrapper>
