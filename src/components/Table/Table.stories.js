@@ -14,6 +14,7 @@ import {
   mockedList,
   mockedPriorities,
   mockedTitles,
+  mockedListWithEmptyData,
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
 import {
@@ -63,7 +64,29 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('4 - Responsive Table with custom options and custom empty cell and colored text', () => (
+  .add('4 - Empty data row', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      center={boolean('center', false)}
+      isLoading={boolean('isLoading', false)}
+      loader={Loader}
+      list={object('list', mockedListWithEmptyData)}
+      // customRows={[]}
+      customRow={(data) => {
+        if (data.name) {
+          return null;
+        }
+        return <div>hello</div>;
+      }}
+    />
+  ))
+
+  .add('5 - Responsive Table with custom options and custom empty cell and colored text', () => (
     <Table
       titles={array('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
@@ -85,7 +108,7 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('5 - normalize', () => (
+  .add('6 - normalize', () => (
     <Table
       onSort={onSort}
       // sort={object('sort', { sortingKey: 'name', order: 'DESC' })}

@@ -141,6 +141,7 @@ class Table extends React.Component {
       colWidths,
       colored,
       emptyCellContent,
+      customRow,
       fontSize,
       head,
       headCell,
@@ -193,6 +194,14 @@ class Table extends React.Component {
       return list.map((data, index) => {
         const id = data.id || uuidv4();
         const items = selectItems({ data, keys, separator });
+
+        const CustomRowComponent = customRow(data);
+
+        console.log('CustomRowComponent:', CustomRowComponent);
+
+        if (CustomRowComponent) {
+          return CustomRowComponent;
+        }
 
         return (
           <Row
