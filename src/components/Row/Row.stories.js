@@ -170,6 +170,22 @@ storiesOf('Components|Row', module)
   )
 
   .add(
+    '- Row with custom items',
+    () => (
+      <Row
+        id={text('id', 'row-id')}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
+        colored={boolean('colored', true)}
+        emptyCellContent={() => <div style={{ color: 'peru', textAlign: 'center' }}>NA</div>}
+        center={boolean('center', false)}
+        items={array('items', ['hello'])}
+      />
+    ),
+    { notes: { markdown: readme } },
+  )
+
+  .add(
     '- Row with custom cells',
     () => (
       <Row id={text('id', 'row-id')}>

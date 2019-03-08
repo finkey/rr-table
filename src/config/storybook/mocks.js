@@ -6,7 +6,7 @@ export const mockedBreakpoints = [500, 700, 900, 1000, 1100];
 
 export const mockedPriorities = [1, 2, undefined, 3, 4];
 
-export const mockedColWidths = [2, 1.5, undefined, 0.8, 2];
+export const mockedColWidths = [2, '200px', 1, '20rem', 2, 1];
 
 export const mockedItems = [
   'sample text - 1',
@@ -101,6 +101,117 @@ export const mockedList = [
     },
     company: {
       job: '',
+    },
+
+    id: '6',
+  },
+  {
+    name: 'Dicaprio',
+    surname: 'Jose',
+    info: {
+      age: 34,
+      sex: 'male',
+    },
+    company: {
+      job: 'actor',
+    },
+
+    id: '7',
+  },
+  {
+    name: 'James',
+    surname: 'Lebron',
+    info: {
+      age: 19,
+      sex: 'male',
+    },
+    company: {
+      job: 'footballer',
+    },
+
+    id: '8',
+  },
+];
+
+
+export const mockedListWithEmptyData = [
+  {
+    name: 'Francis',
+    surname: 'Denis',
+    info: {
+      age: 33,
+      sex: 'male',
+    },
+    company: {
+      job: 'artist',
+    },
+    id: '1',
+    pets: ['dog', 'cat'],
+  },
+  {
+    name: 'Ingals Bla bla bla',
+    surname:
+      'Charles Le plus beau et le plus gros et le plus sympas, il est rigolo hahah hahah ahahah ahahah',
+    info: {
+      age: 47,
+      sex: 'male',
+    },
+    company: {
+      job: 'teacher',
+    },
+
+    id: '2',
+  },
+  {
+    name: undefined,
+    surname:    undefined,
+    info: {
+      age: undefined,
+      sex: undefined,
+    },
+    company: {
+      job: undefined,
+    },
+
+    id: '3',
+    pets: undefined,
+  },
+  {
+    name: undefined,
+    surname: undefined,
+    info: {
+      age: undefined,
+      sex: undefined,
+    },
+    company: {
+      job: undefined,
+    },
+
+    id: '4',
+  },
+  {
+    name: 'Dupond',
+    surname: 'Herver',
+    info: {
+      age: 33,
+      sex: 'male',
+    },
+    company: {
+      job: 'chef',
+    },
+
+    id: '5',
+    pets: ['dog'],
+  },
+  {
+    name: undefined,
+    surname: undefined,
+    info: {
+      age: undefined,
+      sex: undefined,
+    },
+    company: {
+      job: undefined,
     },
 
     id: '6',

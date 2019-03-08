@@ -151,7 +151,7 @@ DefaultCell.propTypes = {
   /** Custom style */
   style: PropTypes.object,
   /** Text to display in the cell */
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.node]),
 };
 
 DefaultCell.defaultProps = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Media from 'react-media';
 
-import { chooseMediaQuery, defineText } from 'utils';
+import { chooseMediaQuery, defineText, defineColMinWidth } from 'utils';
 import {
   DEFAULT_MEDIA_QUERY, ASC, DESC, NOT_SORTED, DEFAULT_PADDING,
 } from 'config/constants';
@@ -11,10 +11,11 @@ import Sort from '../Sort';
 
 /** Styles */
 const Cell = styled.div`
-  width: ${({ width }) => width || '100%'};
-  height: 100%;
-  display: flex;
   cursor: ${({ isSortable }) => (isSortable ? 'pointer' : 'default')};
+  display: flex;
+  height: 100%;
+  min-width: ${({ width }) => defineColMinWidth(width)};
+  width: ${({ width }) => width || '100%'};
 `;
 
 const Title = styled.div`

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Media from 'react-media';
 
-import { chooseMediaQuery } from 'utils';
+import { chooseMediaQuery, defineColMinWidth } from 'utils';
 import { DEFAULT_MEDIA_QUERY } from 'config/constants/mediaQueries';
-// import Media from 'containers/Media';
 import DefaultCell from './components/DefaultCell';
 import 'config/styles/default.css';
 
@@ -17,6 +16,7 @@ const CellWrapper = styled.div`
   display: flex;
   height: 100%;
   justify-content: flex-start;
+  min-width: ${({ width }) => defineColMinWidth(width)};
   width: ${({ width }) => width};
 `;
 
@@ -115,6 +115,7 @@ Cell.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.node,
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       sortingKey: PropTypes.string,
