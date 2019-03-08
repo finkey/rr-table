@@ -115,6 +115,7 @@ Cell.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.node,
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       sortingKey: PropTypes.string,
