@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   background-color: ${({ backgroundColor, selected }) => (selected ? primary : backgroundColor)};
   box-sizing: border-box;
   color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
-  cursor: pointer;
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'normal')};
   display: flex;
   flex-wrap: nowrap;
   height: ${({ rowHeight }) => rowHeight};
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${({ rowFeedback, selected }) => rowFeedback && !selected && lightGrey};
+    background-color: ${({ rowFeedback, selected, clickable }) => rowFeedback && !selected && clickable && lightGrey};
     color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
   }
 `;
@@ -40,15 +40,16 @@ const Row = ({
   data,
   emptyCellContent,
   fontSize,
+  handleClick,
   id,
   items,
   lineClamp,
   lineHeight,
+  onSort,
   priorities,
   rowFeedback,
   rowHeight,
   selected,
-  onSort,
   sort,
   style,
   textColor,
@@ -64,20 +65,33 @@ const Row = ({
     return 'transparent';
   };
 
+  const setOnClick = () => {
+    const props = {
+      breakpoints,
+      data,
+      id,
+      items,
+      priorities,
+    };
+
+    if (typeof handleClick === 'function') {
+      return () => handleClick(props);
+    }
+
+    if (handleClick === undefined) {
+      return () => toggleCard(props);
+    }
+    return () => null;
+  };
+
   return (
     <Wrapper
       rowHeight={rowHeight}
       backgroundColor={setBackgroundColor()}
       rowFeedback={rowFeedback}
       selected={selected}
-      onClick={() => toggleCard({
-        breakpoints,
-        data,
-        id,
-        items,
-        priorities,
-      })
-      }
+      clickable={handleClick === undefined || handleClick}
+      onClick={setOnClick()}
       style={style}
     >
       {children
@@ -128,6 +142,8 @@ Row.propTypes = {
   emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /** Text font-size */
   fontSize: PropTypes.string,
+  /** On row click custom func */
+  handleClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   /** Row id */
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /** List of the data */
@@ -135,6 +151,7 @@ Row.propTypes = {
     PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.node,
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         sortingKey: PropTypes.string,
@@ -145,6 +162,7 @@ Row.propTypes = {
   lineClamp: PropTypes.number,
   /** Height of a line */
   lineHeight: PropTypes.number,
+
   /** List of column display priorities */
   priorities: PropTypes.arrayOf(PropTypes.number),
   /** user feedback */

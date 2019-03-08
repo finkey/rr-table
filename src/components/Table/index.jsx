@@ -37,6 +37,13 @@ class Table extends React.Component {
     ]),
     /** List of columns widths */
     colWidths: PropTypes.arrayOf(PropTypes.number),
+    /** Custom rows with condition */
+    conditionalRowContents: PropTypes.arrayOf(
+      PropTypes.shape({
+        component: PropTypes.func.isRequired,
+        condition: PropTypes.func.isRequired,
+      }),
+    ),
     /** Text or Component to display when cell is empty */
     emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     /** Text font-size */
@@ -141,7 +148,6 @@ class Table extends React.Component {
       colWidths,
       colored,
       emptyCellContent,
-      customRow,
       fontSize,
       head,
       headCell,
@@ -181,51 +187,45 @@ class Table extends React.Component {
     };
 
     /** Row Component */
-    const selectRowComp = () => {
+    const renderRow = () => {
       if (isLoading && Loader) {
         return <Loader />;
       }
       if (!list) {
         return null;
       }
-      if (row) {
-        return list.map(data => row({ ...data, id: data.id || uuidv4() }));
-      }
+
       return list.map((data, index) => {
         const id = data.id || uuidv4();
         const items = selectItems({ data, keys, separator });
 
-        const CustomRowComponent = customRow(data);
+        const rowProps = {
+          data,
+          id,
+          breakpoints,
+          cellPadding,
+          center,
+          colWidths,
+          colored: setBackgroundColor(index, colored),
+          emptyCellContent,
+          fontSize,
+          key: id,
+          items,
+          lineClamp,
+          lineHeight,
+          priorities,
+          rowFeedback: true,
+          rowHeight,
+          selected: rowId === id,
+          textColor,
+          toggleCard: this.toggleCard,
+        };
 
-        console.log('CustomRowComponent:', CustomRowComponent);
-
-        if (CustomRowComponent) {
-          return CustomRowComponent;
+        if (row) {
+          return row({ ...rowProps });
         }
 
-        return (
-          <Row
-            breakpoints={breakpoints}
-            cellPadding={cellPadding}
-            center={center}
-            colWidths={colWidths}
-            colored={setBackgroundColor(index, colored)}
-            data={data}
-            emptyCellContent={emptyCellContent}
-            fontSize={fontSize}
-            id={id}
-            items={items}
-            key={id}
-            lineClamp={lineClamp}
-            lineHeight={lineHeight}
-            priorities={priorities}
-            rowFeedback
-            rowHeight={rowHeight}
-            selected={rowId === id}
-            textColor={textColor}
-            toggleCard={this.toggleCard}
-          />
-        );
+        return <Row {...rowProps} />;
       });
     };
 
@@ -234,7 +234,7 @@ class Table extends React.Component {
       <TableWrapper style={styles && styles.table}>
         {HeadComponent(propsPassedToHeadComponent)}
 
-        {selectRowComp()}
+        {renderRow()}
 
         {card && (
           <CardWrapper isOpen={cardIsOpen} cardWidth={cardWidth}>

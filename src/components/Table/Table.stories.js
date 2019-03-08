@@ -18,10 +18,10 @@ import {
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
 import {
-  Card, Loader, Head, HeadCell,
+  Card, Loader, Head, HeadCell, EmptyRowContent,
 } from 'config/storybook/components';
 import { onSort } from 'config/storybook/utils';
-// import Row from 'components/Row';
+import Row from 'components/Row';
 // import Cell from 'components/Cell';
 // import Card from 'components/Card';
 import Table from './index';
@@ -76,13 +76,12 @@ storiesOf('- Table -|1 - Default', module)
       isLoading={boolean('isLoading', false)}
       loader={Loader}
       list={object('list', mockedListWithEmptyData)}
-      // customRows={[]}
-      customRow={(data) => {
-        if (data.name) {
-          return null;
-        }
-        return <div>hello</div>;
-      }}
+      conditionalRowContents={[
+        {
+          component: () => <div>hello</div>,
+          condition: data => data.name === undefined,
+        },
+      ]}
     />
   ))
 
@@ -261,6 +260,63 @@ storiesOf('- Table -|3 - Custom HeadCell', module)
     />
   ));
 
+/** Stories of Table with render props row */
+storiesOf('- Table -|4 - render props row', module)
+  /** Decorators */
+  .addDecorator(story => (
+    <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
+  ))
+  .addDecorator(centered)
+
+  /** Stories */
+  .add('- custom row with a unique children', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      breakpoints={mockedBreakpoints}
+      priorities={mockedPriorities}
+      colored={boolean('colored', true)}
+      list={object('list', mockedListWithEmptyData)}
+      row={(rowProps) => {
+        if (!rowProps.data.name && !rowProps.data.surname && !rowProps.data.info.age) {
+          return (
+            <Row id={rowProps.id} {...rowProps} handleClick={null} items={['blabla', 'hehahah']}>
+              <EmptyRowContent>Hello</EmptyRowContent>
+            </Row>
+          );
+        }
+        return <Row {...rowProps} />;
+      }}
+    />
+  ))
+
+  .add('- custom row with custom items', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      breakpoints={mockedBreakpoints}
+      priorities={mockedPriorities}
+      colored={boolean('colored', true)}
+      list={object('list', mockedListWithEmptyData)}
+      row={(rowProps) => {
+        if (!rowProps.data.name && !rowProps.data.surname && !rowProps.data.info.age) {
+          return (
+            <Row
+              {...rowProps}
+              id={rowProps.id}
+              handleClick={null}
+              items={[<EmptyRowContent>Hello</EmptyRowContent>, 'Houhou hou hou']}
+              colWidths={array('colWidths', [4, 1])}
+            />
+          );
+        }
+        return <Row {...rowProps} />;
+      }}
+    />
+  ));
+
 // .add('- Custom Head (function)', () => (
 //   <Table
 //     titles={array('titles', ['Name', 'Surname', 'id'])}
@@ -300,6 +356,10 @@ storiesOf('- Table -|3 - Custom HeadCell', module)
 //     head={props => <Head {...props} />}
 //     card={data => <Card data={data} />}
 //     row={data => (
+// if (data.prout) {
+//   return <Row projectId={42}>lala</Row>;
+// }
+
 //       <Row
 //         key={data.id}
 //         id={data.id}
