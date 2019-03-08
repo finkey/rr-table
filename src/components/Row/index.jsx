@@ -5,21 +5,21 @@ import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
 
+import { defineColWidth } from 'utils';
 import { grey, primary, lightGrey } from 'config/styles/colorPalette';
 import 'config/styles/default.css';
 
 /** Styles */
 const Wrapper = styled.div`
   background-color: ${({ backgroundColor, selected }) => (selected ? primary : backgroundColor)};
+  box-sizing: border-box;
   color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
+  cursor: pointer;
   display: flex;
   flex-wrap: nowrap;
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
-  // position: relative;
-  box-sizing: border-box;
-  cursor: pointer;
 
   transition: all 0.2s ease;
 
@@ -84,6 +84,7 @@ const Row = ({
         || items.map((item, i) => {
           const cellId = uuidv4();
           const columnWidth = colWidths && colWidths[i];
+          const width = defineColWidth(columnWidth);
           return (
             <Cell
               breakpoints={breakpoints}
@@ -100,7 +101,7 @@ const Row = ({
               priority={priorities && priorities[i]}
               sort={sort}
               textColor={textColor}
-              width={columnWidth && `${columnWidth * 100}%`}
+              width={width}
             />
           );
         })}

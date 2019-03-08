@@ -53,6 +53,7 @@ storiesOf('- Table -|1 - Default', module)
       keys={array('keys', mockedKeys)}
       breakpoints={array('breakpoints', mockedBreakpoints)}
       priorities={array('priorities', mockedPriorities)}
+      colWidths={array('colWidths', mockedColWidths)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
       center={boolean('center', false)}
@@ -218,7 +219,16 @@ storiesOf('- Table -|3 - Custom HeadCell', module)
         'info.age',
         'company.job',
         'info.sex',
-        d => <button type="button" onClick={(e) => { e.stopPropagation(); }}>{d.info.sex}</button>,
+        d => (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            {d.info.sex}
+          </button>
+        ),
       ])}
       breakpoints={array('breakpoints', mockedBreakpoints)}
       priorities={array('priorities', mockedPriorities)}
