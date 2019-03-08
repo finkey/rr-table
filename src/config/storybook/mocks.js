@@ -6,7 +6,7 @@ export const mockedBreakpoints = [500, 700, 900, 1000, 1100];
 
 export const mockedPriorities = [1, 2, undefined, 3, 4];
 
-export const mockedColWidths = [2, 1.5, undefined, 0.8, 2];
+export const mockedColWidths = [2, '200px', 1, '20rem', 2, 1];
 
 export const mockedItems = [
   'sample text - 1',
