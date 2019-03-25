@@ -64,28 +64,7 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('4 - Empty data row', () => (
-    <Table
-      titles={array('titles', mockedTitles)}
-      keys={array('keys', mockedKeys)}
-      breakpoints={array('breakpoints', mockedBreakpoints)}
-      priorities={array('priorities', mockedPriorities)}
-      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
-      colored={boolean('colored', true)}
-      center={boolean('center', false)}
-      isLoading={boolean('isLoading', false)}
-      loader={Loader}
-      list={object('list', mockedListWithEmptyData)}
-      conditionalRowContents={[
-        {
-          component: () => <div>hello</div>,
-          condition: data => data.name === undefined,
-        },
-      ]}
-    />
-  ))
-
-  .add('5 - Responsive Table with custom options and custom empty cell and colored text', () => (
+  .add('4 - Responsive Table with custom options and custom empty cell and colored text', () => (
     <Table
       titles={array('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
@@ -107,7 +86,7 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('6 - normalize', () => (
+  .add('5 - normalize', () => (
     <Table
       onSort={onSort}
       // sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
@@ -135,8 +114,79 @@ storiesOf('- Table -|1 - Default', module)
     />
   ));
 
+/** Stories of Empty data */
+storiesOf('- Table -|2 - Empty data', module)
+  /** Decorators */
+  .addDecorator(story => (
+    <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
+  ))
+  .addDecorator(centered)
+
+  /** Stories */
+  .add('1 - Empty data row', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      center={boolean('center', false)}
+      isLoading={boolean('isLoading', false)}
+      loader={Loader}
+      list={object('list', mockedListWithEmptyData)}
+    />
+  ))
+
+  .add('2 - No data at all - default', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      center={boolean('center', false)}
+      isLoading={boolean('isLoading', false)}
+      loader={Loader}
+      list={object('list', [])}
+    />
+  ))
+
+  .add('3 - No data at all - custom text', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      center={boolean('center', false)}
+      isLoading={boolean('isLoading', false)}
+      loader={Loader}
+      list={object('list', [])}
+      emptyList={text('emptyList', '0 results')}
+    />
+  ))
+
+  .add('4 - No data at all - custom component', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      center={boolean('center', false)}
+      isLoading={boolean('isLoading', false)}
+      loader={Loader}
+      list={object('list', [])}
+      emptyList={<EmptyRowContent>Empty list</EmptyRowContent>}
+    />
+  ));
+
 /** Stories of Table with custom Head */
-storiesOf('- Table -|2 - Custom Head', module)
+storiesOf('- Table -|3 - Custom Head', module)
   /** Decorators */
   .addDecorator(story => (
     <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
@@ -181,7 +231,7 @@ storiesOf('- Table -|2 - Custom Head', module)
   ));
 
 /** Stories of Table with custom HeadCell */
-storiesOf('- Table -|3 - Custom HeadCell', module)
+storiesOf('- Table -|4 - Custom HeadCell', module)
   /** Decorators */
   .addDecorator(story => (
     <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
@@ -261,7 +311,7 @@ storiesOf('- Table -|3 - Custom HeadCell', module)
   ));
 
 /** Stories of Table with render props row */
-storiesOf('- Table -|4 - render props row', module)
+storiesOf('- Table -|5 - render props row', module)
   /** Decorators */
   .addDecorator(story => (
     <StoryWrapper border={boolean('-- wrapper border --', false)}>{story()}</StoryWrapper>
@@ -281,7 +331,7 @@ storiesOf('- Table -|4 - render props row', module)
       row={(rowProps) => {
         if (!rowProps.data.name && !rowProps.data.surname && !rowProps.data.info.age) {
           return (
-            <Row id={rowProps.id} {...rowProps} handleClick={null} items={['blabla', 'hehahah']}>
+            <Row id={rowProps.id} {...rowProps} handleClick={null}>
               <EmptyRowContent>Hello</EmptyRowContent>
             </Row>
           );
