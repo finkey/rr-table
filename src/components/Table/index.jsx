@@ -7,6 +7,7 @@ import { setBackgroundColor, selectItems, defineComponentAsFunction } from 'util
 import CardWrapper from 'components/CardWrapper';
 import Row from 'components/Row';
 import Head from 'components/Head';
+import EmptyDataRow from 'components/defaults/EmptyDataRow';
 import 'config/styles/default.css';
 
 /** Styles */
@@ -37,13 +38,6 @@ class Table extends React.Component {
     ]),
     /** List of columns widths */
     colWidths: PropTypes.arrayOf(PropTypes.number),
-    /** Custom rows with condition */
-    conditionalRowContents: PropTypes.arrayOf(
-      PropTypes.shape({
-        component: PropTypes.func.isRequired,
-        condition: PropTypes.func.isRequired,
-      }),
-    ),
     /** Text or Component to display when cell is empty */
     emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     /** Text font-size */
@@ -148,6 +142,7 @@ class Table extends React.Component {
       colWidths,
       colored,
       emptyCellContent,
+      emptyList,
       fontSize,
       head,
       headCell,
@@ -191,8 +186,22 @@ class Table extends React.Component {
       if (isLoading && Loader) {
         return <Loader />;
       }
-      if (!list) {
-        return null;
+      if (!list || list.length === 0) {
+        let rowContent = <EmptyDataRow>No Data</EmptyDataRow>;
+
+        if (typeof emptyList === 'function') {
+          rowContent = emptyList();
+        } else if (React.isValidElement(emptyList)) {
+          rowContent = emptyList;
+        } else if (typeof emptyList === 'string') {
+          rowContent = <EmptyDataRow>{emptyList}</EmptyDataRow>;
+        }
+
+        return (
+          <Row id="no-data" handleClick={null}>
+            {rowContent}
+          </Row>
+        );
       }
 
       return list.map((data, index) => {
