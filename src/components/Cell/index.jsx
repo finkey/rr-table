@@ -11,8 +11,6 @@ import 'config/styles/default.css';
 /** Styles */
 const CellWrapper = styled.div`
   align-items: center;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  color: ${({ color }) => color};
   display: flex;
   height: 100%;
   justify-content: flex-start;
@@ -36,7 +34,6 @@ const Cell = ({
   priority,
   onSort,
   sort,
-  textColor,
   width,
 }) => {
   const isSortable = typeof onSort === 'function'
@@ -89,7 +86,6 @@ const Cell = ({
       {matches => (matches ? null : (
         <CellWrapper
           backgroundColor={backgroundColor}
-          color={textColor}
           onClick={handleClick}
           width={width}
         >
@@ -142,15 +138,12 @@ Cell.propTypes = {
     sortingKey: PropTypes.string,
     order: PropTypes.oneOf(['ASC', 'DESC']),
   }),
-  /** Color of the displayed text */
-  textColor: PropTypes.string,
   /** Cell width */
   width: PropTypes.string,
 };
 
 Cell.defaultProps = {
   width: '100%',
-  textColor: 'inherit',
   backgroundColor: 'transparent',
 };
 

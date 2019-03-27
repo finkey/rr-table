@@ -86,7 +86,30 @@ storiesOf('- Table -|1 - Default', module)
     />
   ))
 
-  .add('5 - normalize', () => (
+  .add('5 - Responsive Table with custom options and custom empty cell and custom colors', () => (
+    <Table
+      titles={array('titles', mockedTitles)}
+      keys={array('keys', mockedKeys)}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      cardWidth={text('cardWidth', '400px')}
+      colored={object('colored', { color: '#cfd8dc', parity: 2 })}
+      center={boolean('center', false)}
+      emptyCellContent={() => <div style={{ color: '#ffcc80', fontWeight: 'bold' }}>No data</div>}
+      colWidths={array('colWidths', mockedColWidths)}
+      fontSize={text('fontSize', '14px')}
+      lineClamp={number('lineClamp', 1)}
+      lineHeight={number('lineHeight', 2.2)}
+      rowHeight={text('rowHeight', '50px')}
+      textColor={color('textColor', { default: '#263238', hovered: '#3f51b5', selected: '#f5f5f5' })}
+      rowColor={color('rowColor', { default: '#e8eaf6', hovered: '#b0bec5', selected: '#00897b' })}
+      cellPadding={text('cellPadding', '10px')}
+      list={object('list', mockedList)}
+    />
+  ))
+
+  .add('6 - normalize', () => (
     <Table
       onSort={onSort}
       // sort={object('sort', { sortingKey: 'name', order: 'DESC' })}

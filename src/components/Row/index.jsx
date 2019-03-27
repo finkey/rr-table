@@ -11,9 +11,9 @@ import 'config/styles/default.css';
 
 /** Styles */
 const Wrapper = styled.div`
-  background-color: ${({ backgroundColor, selected }) => (selected ? primary : backgroundColor)};
+  background-color: ${({ backgroundColor, selected, selectedRowColor }) => (selected ? selectedRowColor || primary : backgroundColor)};
   box-sizing: border-box;
-  color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
+  color: ${({ selected, defaultTextColor, selectedTextColor }) => (selected ? selectedTextColor || 'white' : defaultTextColor)};
   cursor: ${({ clickable }) => (clickable ? 'pointer' : 'normal')};
   display: flex;
   flex-wrap: nowrap;
@@ -24,8 +24,10 @@ const Wrapper = styled.div`
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${({ rowFeedback, selected, clickable }) => rowFeedback && !selected && clickable && lightGrey};
-    color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
+    background-color: ${({
+    rowFeedback, selected, clickable, hoveredRowColor,
+  }) => rowFeedback && !selected && clickable && (hoveredRowColor || lightGrey)};
+    color: ${({ selected, selectedTextColor, hoveredTextColor }) => (selected ? selectedTextColor : hoveredTextColor || 'inherit')};
   }
 `;
 
@@ -47,6 +49,7 @@ const Row = ({
   lineHeight,
   onSort,
   priorities,
+  rowColor,
   rowFeedback,
   rowHeight,
   selected,
@@ -62,6 +65,13 @@ const Row = ({
     if (colored === true) {
       return grey;
     }
+    if (typeof rowColor === 'string') {
+      return rowColor;
+    }
+    if (typeof rowColor === 'object') {
+      return rowColor.default;
+    }
+
     return 'transparent';
   };
 
@@ -84,14 +94,29 @@ const Row = ({
     return () => null;
   };
 
+  const defineDefaultTextColor = () => {
+    if (typeof textColor === 'string') {
+      return textColor;
+    }
+    if (typeof textColor === 'object') {
+      return textColor.default;
+    }
+    return 'inherit';
+  };
+
   return (
     <Wrapper
-      rowHeight={rowHeight}
       backgroundColor={setBackgroundColor()}
-      rowFeedback={rowFeedback}
-      selected={selected}
       clickable={handleClick === undefined || handleClick}
+      defaultTextColor={defineDefaultTextColor()}
+      hoveredRowColor={typeof rowColor === 'object' && rowColor.hovered}
+      hoveredTextColor={typeof textColor === 'object' && textColor.hovered}
       onClick={setOnClick()}
+      rowFeedback={rowFeedback}
+      rowHeight={rowHeight}
+      selected={selected}
+      selectedRowColor={typeof rowColor === 'object' && rowColor.selected}
+      selectedTextColor={typeof textColor === 'object' && textColor.selected}
       style={style}
     >
       {children
@@ -114,7 +139,7 @@ const Row = ({
               padding={cellPadding}
               priority={priorities && priorities[i]}
               sort={sort}
-              textColor={textColor}
+              // textColor={textColor}
               width={width}
             />
           );
@@ -165,6 +190,15 @@ Row.propTypes = {
 
   /** List of column display priorities */
   priorities: PropTypes.arrayOf(PropTypes.number),
+  /** Colors of the row */
+  rowColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      defaut: PropTypes.string.isRequired,
+      hovered: PropTypes.string,
+      slected: PropTypes.string.isRequired,
+    }),
+  ]),
   /** user feedback */
   rowFeedback: PropTypes.bool,
   /** Height of the Row */
@@ -180,8 +214,15 @@ Row.propTypes = {
   }),
   /** Custom Row style */
   style: PropTypes.object,
-  /** Color of the displayed text */
-  textColor: PropTypes.string,
+  /** Colors of the displayed text */
+  textColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      defaut: PropTypes.string.isRequired,
+      hovered: PropTypes.string,
+      slected: PropTypes.string.isRequired,
+    }),
+  ]),
   /** Toggle the modal on the right */
   toggleCard: PropTypes.func,
 };
