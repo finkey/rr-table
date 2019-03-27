@@ -3,7 +3,7 @@ const palette = {
   lightGrey: '#e0e0e0',
   grey: '#eeeeee',
   darkGrey: '#a8a8a8',
-  primary: '#1c5cf7',
+  primary: '#008AC6',
 };
 
 export const lightGrey = palette.lightGrey;
