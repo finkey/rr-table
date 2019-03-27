@@ -74,6 +74,15 @@ class Table extends React.Component {
     priorities: PropTypes.arrayOf(PropTypes.number),
     /** Render Row Component */
     row: PropTypes.func,
+    /** Colors of the row */
+    rowColor: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        defaut: PropTypes.string.isRequired,
+        hovered: PropTypes.string,
+        slected: PropTypes.string.isRequired,
+      }),
+    ]),
     /** Height of the Row */
     rowHeight: PropTypes.string,
     /** separator to "join" list of string */
@@ -93,8 +102,15 @@ class Table extends React.Component {
       row: PropTypes.object,
       table: PropTypes.object,
     }),
-    /** Color of the displayed text */
-    textColor: PropTypes.string,
+    /** Colors of the displayed text */
+    textColor: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        defaut: PropTypes.string.isRequired,
+        hovered: PropTypes.string,
+        slected: PropTypes.string.isRequired,
+      }),
+    ]),
     /** List of Titles of the columns */
     titles: PropTypes.arrayOf(
       PropTypes.oneOfType([
@@ -156,6 +172,7 @@ class Table extends React.Component {
       onSort,
       priorities,
       row,
+      rowColor,
       rowHeight,
       separator,
       sort,
@@ -187,7 +204,7 @@ class Table extends React.Component {
         return <Loader />;
       }
       if (!list || list.length === 0) {
-        let rowContent = <EmptyDataRow>No Data</EmptyDataRow>;
+        let rowContent = <EmptyDataRow>Pas de données disponibles</EmptyDataRow>;
 
         if (typeof emptyList === 'function') {
           rowContent = emptyList();
@@ -223,6 +240,7 @@ class Table extends React.Component {
           lineClamp,
           lineHeight,
           priorities,
+          rowColor,
           rowFeedback: true,
           rowHeight,
           selected: rowId === id,
