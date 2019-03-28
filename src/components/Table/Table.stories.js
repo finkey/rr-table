@@ -5,6 +5,7 @@ import centered from '@storybook/addon-centered';
 import {
   text, number, boolean, array, object, color,
 } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 /** Components Import */
 import {
@@ -111,8 +112,6 @@ storiesOf('- Table -|1 - Default', module)
 
   .add('6 - normalize', () => (
     <Table
-      onSort={onSort}
-      // sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
       titles={array('titles', [
         { title: 'Name', sortingKey: 'name' },
         { title: 'Surname' },
@@ -135,6 +134,35 @@ storiesOf('- Table -|1 - Default', module)
       colored={boolean('colored', true)}
       list={object('list', mockedList)}
     />
+  ))
+  
+  .add('7 - Sorting', () => (
+    <Table
+      onSort={action('cell clicked')}
+      sort={object('sort', { sortingKey: 'name', order: 'DESC' })}
+      titles={array('titles', [
+        { title: 'Name', sortingKey: 'name' },
+        { title: 'Surname' },
+        { title: 'Age', sortingKey: 'info.age' },
+        'Job',
+        { title: 'Sex', sortingKey: 'info.sex' },
+        'Animaux',
+      ])}
+      keys={array('keys', [
+        { display: 'name', normalize: data => data.toUpperCase() },
+        'surname',
+        'info.age',
+        'company.job',
+        'info.sex',
+        d => d.pets && d.pets.join(', ').toUpperCase(),
+      ])}
+      breakpoints={array('breakpoints', mockedBreakpoints)}
+      priorities={array('priorities', mockedPriorities)}
+      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      colored={boolean('colored', true)}
+      list={object('list', mockedList)}
+    />
+
   ));
 
 /** Stories of Empty data */

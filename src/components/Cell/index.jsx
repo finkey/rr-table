@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Media from 'react-media';
 
-import { chooseMediaQuery, defineColMinWidth } from 'utils';
+import { defineText, chooseMediaQuery, defineColMinWidth } from 'utils';
 import { DEFAULT_MEDIA_QUERY } from 'config/constants/mediaQueries';
 import DefaultCell from './components/DefaultCell';
 import 'config/styles/default.css';
@@ -32,31 +32,8 @@ const Cell = ({
   lineHeight,
   padding,
   priority,
-  onSort,
-  sort,
   width,
 }) => {
-  const isSortable = typeof onSort === 'function'
-    && typeof data === 'object'
-    && typeof data.title === 'string'
-    && typeof data.sortingKey === 'string';
-
-  const defineText = () => {
-    if (typeof data === 'string' || typeof data === 'number') {
-      return data;
-    }
-
-    if (data && typeof data === 'object' && React.isValidElement(data)) {
-      return data;
-    }
-
-    if (data && typeof data === 'object') {
-      return data.title && typeof data.title === 'string' && data.title;
-    }
-
-    return null;
-  };
-
   const renderFunctionOrComponentOrDefault = () => {
     if (typeof children === 'function') {
       return children({ data, breakpoints, priority });
@@ -64,6 +41,7 @@ const Cell = ({
     if (typeof children === 'object') {
       return children;
     }
+
     return (
       <DefaultCell
         center={center}
@@ -72,11 +50,7 @@ const Cell = ({
         lineClamp={lineClamp}
         lineHeight={lineHeight}
         padding={padding}
-        onSort={onSort}
-        sortable={isSortable}
-        sortingKey={isSortable ? data.sortingKey : null}
-        sort={sort}
-        text={defineText()}
+        text={defineText(data, children)}
       />
     );
   };
@@ -88,6 +62,7 @@ const Cell = ({
           backgroundColor={backgroundColor}
           onClick={handleClick}
           width={width}
+          className="HandleClick"
         >
           {renderFunctionOrComponentOrDefault()}
         </CellWrapper>
@@ -114,7 +89,6 @@ Cell.propTypes = {
     PropTypes.node,
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      sortingKey: PropTypes.string,
     }),
   ]),
   /** Text or Component to display when cell is empty */
@@ -131,13 +105,6 @@ Cell.propTypes = {
   padding: PropTypes.string,
   /** Column display priority */
   priority: PropTypes.number,
-  /** sorting function */
-  onSort: PropTypes.func,
-  /** sorting object */
-  sort: PropTypes.shape({
-    sortingKey: PropTypes.string,
-    order: PropTypes.oneOf(['ASC', 'DESC']),
-  }),
   /** Cell width */
   width: PropTypes.string,
 };

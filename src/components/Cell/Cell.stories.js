@@ -139,6 +139,13 @@ storiesOf('Components|Cell', module)
   )
 
   .add(
+    '- Cell with raw text in children',
+    () => (
+      <Cell>Test</Cell>
+    ),
+  )
+
+  .add(
     '- Custom Function',
     () => (
       <Cell data={text('data', SAMPLE_TEXT)} handleClick={action('cell clicked')}>

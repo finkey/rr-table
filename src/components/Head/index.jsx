@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
-import { defineComponentAsFunction, setWidthRatio } from 'utils';
+import { defineComponentAsFunction, defineColWidth } from 'utils';
 import { ASC, DESC, NOT_SORTED } from 'config/constants/sortOrders';
 import { grey } from 'config/styles/colorPalette';
 import HeadCell from 'components/HeadCell';
@@ -40,6 +40,8 @@ const Head = ({
   titles,
 }) => {
   const Cell = defineComponentAsFunction(headCell, HeadCell);
+  const columnWidth = colWidths && colWidths[i];
+  const width = defineColWidth(columnWidth);
 
   return (
     <HeadWrapper height={height} style={styles && styles.head} id={id}>
@@ -55,7 +57,7 @@ const Head = ({
         style: styles && styles.headCell,
         textColor,
         title,
-        width: setWidthRatio(colWidths, i),
+        width,
       }))}
     </HeadWrapper>
   );
