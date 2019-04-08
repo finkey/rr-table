@@ -80,7 +80,7 @@ class Table extends React.Component {
       PropTypes.shape({
         defaut: PropTypes.string.isRequired,
         hovered: PropTypes.string,
-        slected: PropTypes.string.isRequired,
+        selected: PropTypes.string.isRequired,
       }),
     ]),
     /** Height of the Row */
@@ -108,7 +108,7 @@ class Table extends React.Component {
       PropTypes.shape({
         defaut: PropTypes.string.isRequired,
         hovered: PropTypes.string,
-        slected: PropTypes.string.isRequired,
+        selected: PropTypes.string.isRequired,
       }),
     ]),
     /** List of Titles of the columns */

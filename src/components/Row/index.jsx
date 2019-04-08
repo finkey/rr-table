@@ -196,7 +196,7 @@ Row.propTypes = {
     PropTypes.shape({
       defaut: PropTypes.string.isRequired,
       hovered: PropTypes.string,
-      slected: PropTypes.string.isRequired,
+      selected: PropTypes.string.isRequired,
     }),
   ]),
   /** user feedback */
@@ -220,7 +220,7 @@ Row.propTypes = {
     PropTypes.shape({
       defaut: PropTypes.string.isRequired,
       hovered: PropTypes.string,
-      slected: PropTypes.string.isRequired,
+      selected: PropTypes.string.isRequired,
     }),
   ]),
   /** Toggle the modal on the right */
