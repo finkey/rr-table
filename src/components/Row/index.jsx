@@ -158,7 +158,7 @@ Row.propTypes = {
   cellPadding: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]), // TODO
   /** List of columns widths */
-  colWidths: PropTypes.arrayOf(PropTypes.number),
+  colWidths: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
   /** Color one line out of two (set to true or set color) */
   colored: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   /** Data as an object */

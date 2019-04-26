@@ -72,7 +72,7 @@ Head.propTypes = {
   /** Center the text in the cell */
   center: PropTypes.bool,
   /** List of columns widths */
-  colWidths: PropTypes.arrayOf(PropTypes.number),
+  colWidths: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
   /** Title font-size */
   fontSize: PropTypes.string,
   /** Header Cells Component */

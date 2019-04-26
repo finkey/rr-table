@@ -37,7 +37,7 @@ class Table extends React.Component {
       }),
     ]),
     /** List of columns widths */
-    colWidths: PropTypes.arrayOf(PropTypes.number),
+    colWidths: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
     /** Text or Component to display when cell is empty */
     emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     /** Text font-size */
