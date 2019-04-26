@@ -11,7 +11,9 @@ const Wrapper = styled.div`
 `;
 
 const Head = ({ titles }) => (
-  <Wrapper>{titles ? titles.map(title => <div>{title}</div>) : <p>no titles</p>}</Wrapper>
+  <Wrapper>
+    {titles ? titles.map(title => <div key={title}>{title}</div>) : <p>no titles</p>}
+  </Wrapper>
 );
 
 export default Head;

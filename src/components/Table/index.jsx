@@ -78,7 +78,7 @@ class Table extends React.Component {
     rowColor: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
-        defaut: PropTypes.string.isRequired,
+        default: PropTypes.string.isRequired,
         hovered: PropTypes.string,
         selected: PropTypes.string.isRequired,
       }),
@@ -106,7 +106,7 @@ class Table extends React.Component {
     textColor: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.shape({
-        defaut: PropTypes.string.isRequired,
+        default: PropTypes.string.isRequired,
         hovered: PropTypes.string,
         selected: PropTypes.string.isRequired,
       }),
@@ -149,6 +149,7 @@ class Table extends React.Component {
 
   render() {
     const { cardIsOpen, cardData, rowId } = this.state;
+
     const {
       breakpoints,
       card,

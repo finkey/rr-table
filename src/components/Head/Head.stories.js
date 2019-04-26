@@ -38,7 +38,6 @@ storiesOf('Components|Head', module)
         id={text('id', 'header-row')}
         breakpoints={array('breakpoints', mockedBreakpoints)}
         priorities={array('priorities', mockedPriorities)}
-        // colWidths={array('colWidths', mockedColWidths)}
       />
     ),
     {

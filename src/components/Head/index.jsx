@@ -40,25 +40,30 @@ const Head = ({
   titles,
 }) => {
   const Cell = defineComponentAsFunction(headCell, HeadCell);
-  const columnWidth = colWidths && colWidths[i];
-  const width = defineColWidth(columnWidth);
 
   return (
     <HeadWrapper height={height} style={styles && styles.head} id={id}>
-      {titles.map((title, i) => Cell({
-        breakpoints,
-        center,
-        fontSize,
-        key: uuidv4(),
-        onSort,
-        padding: cellPadding,
-        priority: priorities && priorities[i],
-        sortingState,
-        style: styles && styles.headCell,
-        textColor,
-        title,
-        width,
-      }))}
+      {titles.map((title, i) => {
+        const columnWidth = colWidths && colWidths[i];
+        const width = defineColWidth(columnWidth);
+        const id = uuidv4();
+
+        return Cell({
+          breakpoints,
+          center,
+          fontSize,
+          id,
+          key: id,
+          onSort,
+          padding: cellPadding,
+          priority: priorities && priorities[i],
+          sortingState,
+          style: styles && styles.headCell,
+          textColor,
+          title,
+          width,
+        });
+      })}
     </HeadWrapper>
   );
 };

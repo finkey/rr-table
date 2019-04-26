@@ -103,8 +103,12 @@ storiesOf('- Table -|1 - Default', module)
       lineClamp={number('lineClamp', 1)}
       lineHeight={number('lineHeight', 2.2)}
       rowHeight={text('rowHeight', '50px')}
-      textColor={color('textColor', { default: '#263238', hovered: '#3f51b5', selected: '#f5f5f5' })}
-      rowColor={color('rowColor', { default: '#e8eaf6', hovered: '#b0bec5', selected: '#00897b' })}
+      textColor={object('textColor', {
+        default: '#263238',
+        hovered: '#3f51b5',
+        selected: '#f5f5f5',
+      })}
+      rowColor={object('rowColor', { default: '#e8eaf6', hovered: '#b0bec5', selected: '#00897b' })}
       cellPadding={text('cellPadding', '10px')}
       list={object('list', mockedList)}
     />
@@ -135,7 +139,7 @@ storiesOf('- Table -|1 - Default', module)
       list={object('list', mockedList)}
     />
   ))
-  
+
   .add('7 - Sorting', () => (
     <Table
       onSort={action('cell clicked')}
@@ -162,7 +166,6 @@ storiesOf('- Table -|1 - Default', module)
       colored={boolean('colored', true)}
       list={object('list', mockedList)}
     />
-
   ));
 
 /** Stories of Empty data */
@@ -274,7 +277,7 @@ storiesOf('- Table -|3 - Custom Head', module)
           }}
         >
           {titles.map(title => (
-            <div>{title}</div>
+            <div key={title}>{title}</div>
           ))}
         </div>
       )}
@@ -290,14 +293,6 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
   .addDecorator(centered)
 
   /** Stories */
-  .add('- Custom HeadCell (component)', () => (
-    <Table
-      titles={array('titles', ['Name', 'Surname', 'id'])}
-      headCell={object('head', <HeadCell />)}
-      list={object('list', mockedList)}
-    />
-  ))
-
   .add('- Custom HeadCell (component function)', () => (
     <Table
       headCell={HeadCell}
@@ -311,7 +306,7 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
     <Table
       titles={array('titles', ['Name', 'Surname', 'id'])}
       list={object('list', mockedList)}
-      headCell={({ title }) => <HeadCell>{title}</HeadCell>}
+      headCell={({ title, id }) => <HeadCell key={id}>{title}</HeadCell>}
     />
   ))
 
@@ -320,7 +315,7 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
       titles={array('titles', ['Name', 'Surname', 'id'])}
       list={object('list', mockedList)}
       head={Head}
-      headCell={({ title }) => <HeadCell>{title}</HeadCell>}
+      headCell={({ title, id }) => <HeadCell key={id}>{title}</HeadCell>}
     />
   ))
 

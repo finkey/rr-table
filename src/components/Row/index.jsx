@@ -194,7 +194,7 @@ Row.propTypes = {
   rowColor: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({
-      defaut: PropTypes.string.isRequired,
+      default: PropTypes.string.isRequired,
       hovered: PropTypes.string,
       selected: PropTypes.string.isRequired,
     }),
@@ -218,7 +218,7 @@ Row.propTypes = {
   textColor: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({
-      defaut: PropTypes.string.isRequired,
+      default: PropTypes.string.isRequired,
       hovered: PropTypes.string,
       selected: PropTypes.string.isRequired,
     }),
