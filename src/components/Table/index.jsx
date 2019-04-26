@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 
-import { setBackgroundColor, selectItems } from 'utils';
+import { setBackgroundColor, selectItems, defineComponentAsFunction } from 'utils';
 import CardWrapper from 'components/CardWrapper';
 import Row from 'components/Row';
-// import Card from 'components/Card';
+import Head from 'components/Head';
+import EmptyDataRow from 'components/defaults/EmptyDataRow';
 import 'config/styles/default.css';
 
 /** Styles */
@@ -17,7 +18,6 @@ const TableWrapper = styled.div`
 /** Component */
 class Table extends React.Component {
   static propTypes = {
-    // children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
     /** List of breakpoints */
     breakpoints: PropTypes.arrayOf(PropTypes.number),
     /** Render Card Component */
@@ -37,13 +37,17 @@ class Table extends React.Component {
       }),
     ]),
     /** List of columns widths */
-    colWidths: PropTypes.arrayOf(PropTypes.number),
+    colWidths: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
     /** Text or Component to display when cell is empty */
     emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     /** Text font-size */
     fontSize: PropTypes.string,
     /** Render Head Component */
-    head: PropTypes.func,
+    head: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    /** Height of the Head row */
+    headHeight: PropTypes.string,
+    /** Render HeadCell Component */
+    headCell: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     /** Data is loading */
     isLoading: PropTypes.bool,
     /** Keys to display */
@@ -70,6 +74,15 @@ class Table extends React.Component {
     priorities: PropTypes.arrayOf(PropTypes.number),
     /** Render Row Component */
     row: PropTypes.func,
+    /** Colors of the row */
+    rowColor: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        default: PropTypes.string.isRequired,
+        hovered: PropTypes.string,
+        selected: PropTypes.string.isRequired,
+      }),
+    ]),
     /** Height of the Row */
     rowHeight: PropTypes.string,
     /** separator to "join" list of string */
@@ -81,8 +94,23 @@ class Table extends React.Component {
       sortingKey: PropTypes.string,
       order: PropTypes.oneOf(['ASC', 'DESC']),
     }),
-    /** Color of the displayed text */
-    textColor: PropTypes.string,
+    /** Custom styles */
+    styles: PropTypes.shape({
+      cell: PropTypes.object,
+      head: PropTypes.object,
+      headCell: PropTypes.object,
+      row: PropTypes.object,
+      table: PropTypes.object,
+    }),
+    /** Colors of the displayed text */
+    textColor: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        default: PropTypes.string.isRequired,
+        hovered: PropTypes.string,
+        selected: PropTypes.string.isRequired,
+      }),
+    ]),
     /** List of Titles of the columns */
     titles: PropTypes.arrayOf(
       PropTypes.oneOfType([
@@ -93,8 +121,6 @@ class Table extends React.Component {
         }),
       ]),
     ),
-    /** With default Card or not */
-    // withCard: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -123,8 +149,8 @@ class Table extends React.Component {
 
   render() {
     const { cardIsOpen, cardData, rowId } = this.state;
+
     const {
-      // children,
       breakpoints,
       card,
       cardWidth,
@@ -133,88 +159,110 @@ class Table extends React.Component {
       colWidths,
       colored,
       emptyCellContent,
+      emptyList,
       fontSize,
       head,
+      headCell,
+      headHeight,
       isLoading,
       keys,
       lineClamp,
       lineHeight,
       list,
       loader: Loader,
+      onSort,
       priorities,
       row,
+      rowColor,
       rowHeight,
       separator,
-      onSort,
       sort,
+      styles,
       textColor,
       titles,
     } = this.props;
 
-    const selectRowComp = () => {
+    /** Head Component */
+    const HeadComponent = defineComponentAsFunction(head, Head);
+
+    const propsPassedToHeadComponent = {
+      breakpoints,
+      cellPadding,
+      center,
+      colWidths,
+      headCell,
+      headHeight,
+      onSort,
+      priorities,
+      sortingState: sort,
+      textColor,
+      titles,
+    };
+
+    /** Row Component */
+    const renderRow = () => {
       if (isLoading && Loader) {
         return <Loader />;
       }
-      if (!list) {
-        return null;
+      if (!list || list.length === 0) {
+        let rowContent = <EmptyDataRow>Pas de données disponibles</EmptyDataRow>;
+
+        if (typeof emptyList === 'function') {
+          rowContent = emptyList();
+        } else if (React.isValidElement(emptyList)) {
+          rowContent = emptyList;
+        } else if (typeof emptyList === 'string') {
+          rowContent = <EmptyDataRow>{emptyList}</EmptyDataRow>;
+        }
+
+        return (
+          <Row id="no-data" handleClick={null}>
+            {rowContent}
+          </Row>
+        );
       }
-      if (row) {
-        return list.map(data => row({ ...data, id: data.id || uuidv4() }));
-      }
+
       return list.map((data, index) => {
         const id = data.id || uuidv4();
         const items = selectItems({ data, keys, separator });
 
-        return (
-          <Row
-            breakpoints={breakpoints}
-            cellPadding={cellPadding}
-            center={center}
-            colWidths={colWidths}
-            colored={setBackgroundColor(index, colored)}
-            data={data}
-            emptyCellContent={emptyCellContent}
-            fontSize={fontSize}
-            id={id}
-            items={items}
-            key={id}
-            lineClamp={lineClamp}
-            lineHeight={lineHeight}
-            priorities={priorities}
-            rowFeedback
-            rowHeight={rowHeight}
-            selected={rowId === id}
-            textColor={textColor}
-            toggleCard={this.toggleCard}
-          />
-        );
+        const rowProps = {
+          data,
+          id,
+          breakpoints,
+          cellPadding,
+          center,
+          colWidths,
+          colored: setBackgroundColor(index, colored),
+          emptyCellContent,
+          fontSize,
+          key: id,
+          items,
+          lineClamp,
+          lineHeight,
+          priorities,
+          rowColor,
+          rowFeedback: true,
+          rowHeight,
+          selected: rowId === id,
+          textColor,
+          toggleCard: this.toggleCard,
+        };
+
+        if (row) {
+          return row({ ...rowProps });
+        }
+
+        return <Row {...rowProps} />;
       });
     };
 
+    /** render */
     return (
-      <TableWrapper>
-        {head
-          ? head({ titles, breakpoints, priorities })
-          : titles && (
-          <Row
-            breakpoints={breakpoints}
-            cellPadding={cellPadding}
-            center={center}
-            colWidths={colWidths}
-            fontSize={fontSize}
-            id="head"
-            items={titles}
-            priorities={priorities}
-            rowFeedback={false}
-            style={{ boxShadow: '0px 5px 2px #e0e0e0', marginBottom: '5px' }}
-            textColor={textColor}
-            toggleCard={() => null}
-            onSort={onSort}
-            sort={sort}
-          />
-          )}
+      <TableWrapper style={styles && styles.table}>
+        {HeadComponent(propsPassedToHeadComponent)}
 
-        {selectRowComp()}
+        {renderRow()}
 
         {card && (
           <CardWrapper isOpen={cardIsOpen} cardWidth={cardWidth}>

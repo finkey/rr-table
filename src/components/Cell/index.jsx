@@ -3,21 +3,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Media from 'react-media';
 
-import { chooseMediaQuery } from 'utils';
+import { defineText, chooseMediaQuery, defineColMinWidth } from 'utils';
 import { DEFAULT_MEDIA_QUERY } from 'config/constants/mediaQueries';
-// import Media from 'containers/Media';
 import DefaultCell from './components/DefaultCell';
 import 'config/styles/default.css';
 
 /** Styles */
 const CellWrapper = styled.div`
   align-items: center;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  color: ${({ color }) => color};
-  cursor: ${({ cursor }) => cursor};
   display: flex;
   height: 100%;
   justify-content: flex-start;
+  min-width: ${({ width }) => defineColMinWidth(width)};
   width: ${({ width }) => width};
 `;
 
@@ -35,26 +32,8 @@ const Cell = ({
   lineHeight,
   padding,
   priority,
-  onSort,
-  sort,
-  textColor,
   width,
 }) => {
-  const isSortable = typeof onSort === 'function'
-    && typeof data === 'object'
-    && typeof data.title === 'string'
-    && typeof data.sortingKey === 'string';
-
-  const defineText = () => {
-    if (typeof data === 'string' || typeof data === 'number') {
-      return data;
-    }
-    if (data && typeof data === 'object') {
-      return data.title && typeof data.title === 'string' && data.title;
-    }
-    return null;
-  };
-
   const renderFunctionOrComponentOrDefault = () => {
     if (typeof children === 'function') {
       return children({ data, breakpoints, priority });
@@ -62,6 +41,7 @@ const Cell = ({
     if (typeof children === 'object') {
       return children;
     }
+
     return (
       <DefaultCell
         center={center}
@@ -70,11 +50,7 @@ const Cell = ({
         lineClamp={lineClamp}
         lineHeight={lineHeight}
         padding={padding}
-        onSort={onSort}
-        sortable={isSortable}
-        sortingKey={isSortable ? data.sortingKey : null}
-        sort={sort}
-        text={defineText()}
+        text={defineText(data, children)}
       />
     );
   };
@@ -84,8 +60,6 @@ const Cell = ({
       {matches => (matches ? null : (
         <CellWrapper
           backgroundColor={backgroundColor}
-          color={textColor}
-          cursor={handleClick ? 'pointer' : 'default'}
           onClick={handleClick}
           width={width}
         >
@@ -111,9 +85,9 @@ Cell.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.node,
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      sortingKey: PropTypes.string,
     }),
   ]),
   /** Text or Component to display when cell is empty */
@@ -130,22 +104,12 @@ Cell.propTypes = {
   padding: PropTypes.string,
   /** Column display priority */
   priority: PropTypes.number,
-  /** sorting function */
-  onSort: PropTypes.func,
-  /** sorting object */
-  sort: PropTypes.shape({
-    sortingKey: PropTypes.string,
-    order: PropTypes.oneOf(['ASC', 'DESC']),
-  }),
-  /** Color of the displayed text */
-  textColor: PropTypes.string,
   /** Cell width */
   width: PropTypes.string,
 };
 
 Cell.defaultProps = {
   width: '100%',
-  textColor: 'inherit',
   backgroundColor: 'transparent',
 };
 

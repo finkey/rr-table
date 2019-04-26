@@ -24,6 +24,7 @@ addDecorator(
     hierarchySeparator: /\/|\./,
     hierarchyRootSeparator: /\|/,
     addonPanelInRight: true,
+    sortStoriesByKind: true,
   }),
 );
 addDecorator(backgrounds);

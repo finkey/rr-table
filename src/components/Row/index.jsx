@@ -5,27 +5,29 @@ import uuidv4 from 'uuid/v4';
 
 import Cell from 'components/Cell';
 
-import { lightGrey, grey, primary } from 'config/styles/colorPalette';
+import { defineColWidth } from 'utils';
+import { grey, primary, lightGrey } from 'config/styles/colorPalette';
 import 'config/styles/default.css';
 
 /** Styles */
 const Wrapper = styled.div`
-  background-color: ${({ backgroundColor, selected }) => (selected ? primary : backgroundColor)};
-  color: ${({ selected }) => (selected ? '#ffffff' : 'inherit')};
+  background-color: ${({ backgroundColor, selected, selectedRowColor }) => (selected ? selectedRowColor || primary : backgroundColor)};
+  box-sizing: border-box;
+  color: ${({ selected, defaultTextColor, selectedTextColor }) => (selected ? selectedTextColor || 'white' : defaultTextColor)};
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'normal')};
   display: flex;
   flex-wrap: nowrap;
   height: ${({ rowHeight }) => rowHeight};
   justify-content: space-evenly;
   width: 100%;
-  position: relative;
-  border: ${({ rowFeedback }) => rowFeedback && '2px solid transparent'};
-
-  box-sizing: border-box;
 
   transition: all 0.2s ease;
 
   &:hover {
-    border: ${({ rowFeedback }) => rowFeedback && `2px solid ${primary}`};
+    background-color: ${({
+    rowFeedback, selected, clickable, hoveredRowColor,
+  }) => rowFeedback && !selected && clickable && (hoveredRowColor || lightGrey)};
+    color: ${({ selected, selectedTextColor, hoveredTextColor }) => (selected ? selectedTextColor : hoveredTextColor || 'inherit')};
   }
 `;
 
@@ -40,15 +42,17 @@ const Row = ({
   data,
   emptyCellContent,
   fontSize,
+  handleClick,
   id,
   items,
   lineClamp,
   lineHeight,
+  onSort,
   priorities,
+  rowColor,
   rowFeedback,
   rowHeight,
   selected,
-  onSort,
   sort,
   style,
   textColor,
@@ -61,29 +65,65 @@ const Row = ({
     if (colored === true) {
       return grey;
     }
+    if (typeof rowColor === 'string') {
+      return rowColor;
+    }
+    if (typeof rowColor === 'object') {
+      return rowColor.default;
+    }
+
     return 'transparent';
+  };
+
+  const setOnClick = () => {
+    const props = {
+      breakpoints,
+      data,
+      id,
+      items,
+      priorities,
+    };
+
+    if (typeof handleClick === 'function') {
+      return () => handleClick(props);
+    }
+
+    if (handleClick === undefined) {
+      return () => toggleCard(props);
+    }
+    return () => null;
+  };
+
+  const defineDefaultTextColor = () => {
+    if (typeof textColor === 'string') {
+      return textColor;
+    }
+    if (typeof textColor === 'object') {
+      return textColor.default;
+    }
+    return 'inherit';
   };
 
   return (
     <Wrapper
-      rowHeight={rowHeight}
       backgroundColor={setBackgroundColor()}
+      clickable={handleClick === undefined || handleClick}
+      defaultTextColor={defineDefaultTextColor()}
+      hoveredRowColor={typeof rowColor === 'object' && rowColor.hovered}
+      hoveredTextColor={typeof textColor === 'object' && textColor.hovered}
+      onClick={setOnClick()}
       rowFeedback={rowFeedback}
+      rowHeight={rowHeight}
       selected={selected}
-      onClick={() => toggleCard({
-        breakpoints,
-        data,
-        id,
-        items,
-        priorities,
-      })
-      }
+      selectedRowColor={typeof rowColor === 'object' && rowColor.selected}
+      selectedTextColor={typeof textColor === 'object' && textColor.selected}
       style={style}
     >
       {children
         || items.map((item, i) => {
           const cellId = uuidv4();
           const columnWidth = colWidths && colWidths[i];
+          const width = defineColWidth(columnWidth);
           return (
             <Cell
               breakpoints={breakpoints}
@@ -95,12 +135,12 @@ const Row = ({
               key={cellId}
               lineClamp={lineClamp}
               lineHeight={lineHeight}
+              onSort={onSort}
               padding={cellPadding}
               priority={priorities && priorities[i]}
-              onSort={onSort}
               sort={sort}
-              textColor={textColor}
-              width={columnWidth && `${columnWidth * 100}%`}
+              // textColor={textColor}
+              width={width}
             />
           );
         })}
@@ -118,7 +158,7 @@ Row.propTypes = {
   cellPadding: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]), // TODO
   /** List of columns widths */
-  colWidths: PropTypes.arrayOf(PropTypes.number),
+  colWidths: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
   /** Color one line out of two (set to true or set color) */
   colored: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   /** Data as an object */
@@ -127,6 +167,8 @@ Row.propTypes = {
   emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /** Text font-size */
   fontSize: PropTypes.string,
+  /** On row click custom func */
+  handleClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   /** Row id */
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /** List of the data */
@@ -134,6 +176,7 @@ Row.propTypes = {
     PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
+      PropTypes.node,
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         sortingKey: PropTypes.string,
@@ -144,8 +187,18 @@ Row.propTypes = {
   lineClamp: PropTypes.number,
   /** Height of a line */
   lineHeight: PropTypes.number,
+
   /** List of column display priorities */
   priorities: PropTypes.arrayOf(PropTypes.number),
+  /** Colors of the row */
+  rowColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      default: PropTypes.string.isRequired,
+      hovered: PropTypes.string,
+      selected: PropTypes.string.isRequired,
+    }),
+  ]),
   /** user feedback */
   rowFeedback: PropTypes.bool,
   /** Height of the Row */
@@ -161,8 +214,15 @@ Row.propTypes = {
   }),
   /** Custom Row style */
   style: PropTypes.object,
-  /** Color of the displayed text */
-  textColor: PropTypes.string,
+  /** Colors of the displayed text */
+  textColor: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      default: PropTypes.string.isRequired,
+      hovered: PropTypes.string,
+      selected: PropTypes.string.isRequired,
+    }),
+  ]),
   /** Toggle the modal on the right */
   toggleCard: PropTypes.func,
 };

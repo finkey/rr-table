@@ -2,13 +2,13 @@ export const SAMPLE_TEXT = 'sample text';
 
 export const LONG_TEXT = 'Lorem ipsum dolor amet jianbing vegan art party health goth PBR&B tumeric yuccie everyday carry farm-to-table air plant XOXO meh kickstarter. Fingerstache kale chips lumbersexual flexitarian jean shorts normcore';
 
-export const breakpoints = [500, 700, 900, 1000, 1100];
+export const mockedBreakpoints = [500, 700, 900, 1000, 1100];
 
-export const priorities = [1, 2, undefined, 3, 4];
+export const mockedPriorities = [1, 2, undefined, 3, 4];
 
-export const colWidths = [2, 1.5, undefined, 0.8, 2];
+export const mockedColWidths = [2, '200px', 1, '20rem', 2, 1];
 
-export const items = [
+export const mockedItems = [
   'sample text - 1',
   'sample text hahah haha haha - 2',
   'sample text Bonjour - 3',
@@ -18,11 +18,11 @@ export const items = [
   'sample text - 7',
 ];
 
-export const titles = ['Name', 'Surname', 'Age', 'Job', 'Sex', 'Animaux'];
+export const mockedTitles = ['Name', 'Surname', 'Age', 'Job', 'Sex', 'Animaux'];
 
-export const keys = ['name', 'surname', 'info.age', 'company.job', 'info.sex', 'pets'];
+export const mockedKeys = ['name', 'surname', 'info.age', 'company.job', 'info.sex', 'pets'];
 
-export const list = [
+export const mockedList = [
   {
     name: 'Francis',
     surname: 'Denis',
@@ -101,6 +101,117 @@ export const list = [
     },
     company: {
       job: '',
+    },
+
+    id: '6',
+  },
+  {
+    name: 'Dicaprio',
+    surname: 'Jose',
+    info: {
+      age: 34,
+      sex: 'male',
+    },
+    company: {
+      job: 'actor',
+    },
+
+    id: '7',
+  },
+  {
+    name: 'James',
+    surname: 'Lebron',
+    info: {
+      age: 19,
+      sex: 'male',
+    },
+    company: {
+      job: 'footballer',
+    },
+
+    id: '8',
+  },
+];
+
+
+export const mockedListWithEmptyData = [
+  {
+    name: 'Francis',
+    surname: 'Denis',
+    info: {
+      age: 33,
+      sex: 'male',
+    },
+    company: {
+      job: 'artist',
+    },
+    id: '1',
+    pets: ['dog', 'cat'],
+  },
+  {
+    name: 'Ingals Bla bla bla',
+    surname:
+      'Charles Le plus beau et le plus gros et le plus sympas, il est rigolo hahah hahah ahahah ahahah',
+    info: {
+      age: 47,
+      sex: 'male',
+    },
+    company: {
+      job: 'teacher',
+    },
+
+    id: '2',
+  },
+  {
+    name: undefined,
+    surname:    undefined,
+    info: {
+      age: undefined,
+      sex: undefined,
+    },
+    company: {
+      job: undefined,
+    },
+
+    id: '3',
+    pets: undefined,
+  },
+  {
+    name: undefined,
+    surname: undefined,
+    info: {
+      age: undefined,
+      sex: undefined,
+    },
+    company: {
+      job: undefined,
+    },
+
+    id: '4',
+  },
+  {
+    name: 'Dupond',
+    surname: 'Herver',
+    info: {
+      age: 33,
+      sex: 'male',
+    },
+    company: {
+      job: 'chef',
+    },
+
+    id: '5',
+    pets: ['dog'],
+  },
+  {
+    name: undefined,
+    surname: undefined,
+    info: {
+      age: undefined,
+      sex: undefined,
+    },
+    company: {
+      job: undefined,
     },
 
     id: '6',

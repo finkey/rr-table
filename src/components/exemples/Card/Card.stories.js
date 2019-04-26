@@ -37,7 +37,7 @@ const ProspectData = {
 const CradWrapper = ({ children }) => <div />;
 
 /** Stories */
-storiesOf('Components|Card', module)
+storiesOf('Exemple Components|Card', module)
   /** Decorators */
   .addDecorator(story => (
     <CardWrapper width={text('-- card width --', '400px')}>{story()}</CardWrapper>

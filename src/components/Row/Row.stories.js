@@ -8,7 +8,10 @@ import {
 
 /** Components Import */
 import {
-  breakpoints, colWidths, items, priorities,
+  mockedBreakpoints,
+  mockedColWidths,
+  mockedItems,
+  mockedPriorities,
 } from 'config/storybook/mocks';
 import { StoryWrapper } from 'config/storybook/wrappers';
 import Cell from 'components/Cell';
@@ -29,18 +32,22 @@ storiesOf('Components|Row', module)
   })
 
   /** Stories */
-  .add('- Default Row', () => <Row items={array('items', items)} id={text('id', 'row-id')} />, {
-    notes: { markdown: readme },
-  })
+  .add(
+    '- Default Row',
+    () => <Row items={array('items', mockedItems)} id={text('id', 'row-id')} />,
+    {
+      notes: { markdown: readme },
+    },
+  )
 
   .add(
     '- Responsive Row',
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
       />
     ),
     { notes: { markdown: readme } },
@@ -51,9 +58,9 @@ storiesOf('Components|Row', module)
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
         colored={boolean('colored', true)}
       />
     ),
@@ -65,9 +72,9 @@ storiesOf('Components|Row', module)
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
         colored={text('colored', '#fff8e1')}
         center={boolean('center', true)}
       />
@@ -80,9 +87,9 @@ storiesOf('Components|Row', module)
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
         colored={text('colored', '#fff8e1')}
         rowHeight={text('rowHeight', '200px')}
         center={boolean('center', false)}
@@ -96,9 +103,9 @@ storiesOf('Components|Row', module)
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
         colored={text('colored', '#fff8e1')}
         emptyCellContent={text('emptyCellContent', 'no data')}
         center={boolean('center', false)}
@@ -112,9 +119,9 @@ storiesOf('Components|Row', module)
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
         colored={boolean('colored', true)}
         emptyCellContent={() => <div style={{ color: 'peru', textAlign: 'center' }}>NA</div>}
         center={boolean('center', false)}
@@ -128,11 +135,11 @@ storiesOf('Components|Row', module)
     () => (
       <Row
         id={text('id', 'row-id')}
-        items={array('items', items)}
-        breakpoints={array('breakpoints', breakpoints)}
-        priorities={array('priorities', priorities)}
+        items={array('items', mockedItems)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
         colored={boolean('colored', true)}
-        colWidths={array('colWidths', colWidths)}
+        colWidths={array('colWidths', mockedColWidths)}
         center={boolean('center', false)}
       />
     ),
@@ -143,20 +150,36 @@ storiesOf('Components|Row', module)
     '- Row with custom options',
     () => (
       <Row
-        breakpoints={array('breakpoints', breakpoints)}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
         center={boolean('center', false)}
-        colWidths={array('colWidths', colWidths)}
+        colWidths={array('colWidths', mockedColWidths)}
         colored={boolean('colored', true)}
         emptyCellContent={text('emptyCellContent', 'NA')}
         fontSize={text('fontSize', '22px')}
         id={text('id', 'row-id')}
-        items={array('items', items)}
+        items={array('items', mockedItems)}
         lineClamp={number('lineClamp', 3)}
         lineHeight={number('lineHeight', 1.8)}
         cellPadding={text('cellPadding', '20px')}
-        priorities={array('priorities', priorities)}
+        priorities={array('priorities', mockedPriorities)}
         rowHeight={text('rowHeight', '140px')}
         textColor={color('textColor', '#303f9f')}
+      />
+    ),
+    { notes: { markdown: readme } },
+  )
+
+  .add(
+    '- Row with custom items',
+    () => (
+      <Row
+        id={text('id', 'row-id')}
+        breakpoints={array('breakpoints', mockedBreakpoints)}
+        priorities={array('priorities', mockedPriorities)}
+        colored={boolean('colored', true)}
+        emptyCellContent={() => <div style={{ color: 'peru', textAlign: 'center' }}>NA</div>}
+        center={boolean('center', false)}
+        items={array('items', ['hello'])}
       />
     ),
     { notes: { markdown: readme } },
@@ -175,13 +198,13 @@ storiesOf('Components|Row', module)
               color: 'white',
             })}
           >
-            {text('cell 1 - items', items[0])}
+            {text('cell 1 - items', mockedItems[0])}
           </div>
         </Cell>
-        <Cell data={text('cell 2 - items', items[1])} />
-        <Cell data={text('cell 3 - items', items[2])} />
-        <Cell data={text('cell 4 - items', items[3])} />
-        <Cell data={text('cell 5 - items', items[4])} />
+        <Cell data={text('cell 2 - items', mockedItems[1])} />
+        <Cell data={text('cell 3 - items', mockedItems[2])} />
+        <Cell data={text('cell 4 - items', mockedItems[3])} />
+        <Cell data={text('cell 5 - items', mockedItems[4])} />
         <Cell>
           <div
             style={object('cell 6 - style', {
@@ -191,10 +214,10 @@ storiesOf('Components|Row', module)
               color: 'white',
             })}
           >
-            {text('cell 6 - items', items[5])}
+            {text('cell 6 - items', mockedItems[5])}
           </div>
         </Cell>
-        <Cell data={text('cell 7 - items', items[6])} />
+        <Cell data={text('cell 7 - items', mockedItems[6])} />
       </Row>
     ),
     { notes: { markdown: readme } },
@@ -205,7 +228,7 @@ storiesOf('Components|Row', module)
     () => (
       <Row id={text('id', 'row-id')}>
         <Cell
-          breakpoints={array('breakpoints', breakpoints)}
+          breakpoints={array('breakpoints', mockedBreakpoints)}
           priority={number('cell 1 - priority', 1)}
         >
           <div
@@ -216,26 +239,26 @@ storiesOf('Components|Row', module)
               color: 'white',
             })}
           >
-            {text('cell 1 - items', items[0])}
+            {text('cell 1 - items', mockedItems[0])}
           </div>
         </Cell>
         <Cell
-          data={text('cell 2 - items', items[1])}
-          breakpoints={breakpoints}
+          data={text('cell 2 - items', mockedItems[1])}
+          breakpoints={mockedBreakpoints}
           priority={number('cell 2 - priority', 2)}
         />
-        <Cell data={text('cell 3 - items', items[2])} breakpoints={breakpoints} />
+        <Cell data={text('cell 3 - items', mockedItems[2])} breakpoints={mockedBreakpoints} />
         <Cell
-          data={text('cell 4 - items', items[3])}
-          breakpoints={breakpoints}
+          data={text('cell 4 - items', mockedItems[3])}
+          breakpoints={mockedBreakpoints}
           priority={number('cell 4 - priority', 2)}
         />
         <Cell
-          data={text('cell 5 - items', items[4])}
-          breakpoints={breakpoints}
+          data={text('cell 5 - items', mockedItems[4])}
+          breakpoints={mockedBreakpoints}
           priority={number('cell 5 - priority', 3)}
         />
-        <Cell breakpoints={breakpoints} priority={number('cell 6 - priority', 4)}>
+        <Cell breakpoints={mockedBreakpoints} priority={number('cell 6 - priority', 4)}>
           <div
             style={object('cell 6 - style', {
               width: '80px',
@@ -244,10 +267,10 @@ storiesOf('Components|Row', module)
               color: 'white',
             })}
           >
-            {text('cell 6 - items', items[5])}
+            {text('cell 6 - items', mockedItems[5])}
           </div>
         </Cell>
-        <Cell data={text('cell 7 - items', items[6])} breakpoints={breakpoints} />
+        <Cell data={text('cell 7 - items', mockedItems[6])} breakpoints={mockedBreakpoints} />
       </Row>
     ),
     { notes: { markdown: readme } },
@@ -268,19 +291,19 @@ storiesOf('Components|Row', module)
         >
           <div>
             <h4>{text('cell 1 -  custom title', 'Custom')}</h4>
-            <p>{text('cell 1 - items', items[0])}</p>
+            <p>{text('cell 1 - items', mockedItems[0])}</p>
           </div>
           <div>
             <h4>{text('cell 2 -  custom title', 'Custom')}</h4>
-            <p>{text('cell 2 - items', items[1])}</p>
+            <p>{text('cell 2 - items', mockedItems[1])}</p>
           </div>
           <div>
             <h4>{text('cell 3 -  custom title', 'Custom')}</h4>
-            <p>{text('cell 3 - items', items[2])}</p>
+            <p>{text('cell 3 - items', mockedItems[2])}</p>
           </div>
           <div>
             <h4>{text('cell 4 -  custom title', 'Custom')}</h4>
-            <p>{text('cell 4 - items', items[3])}</p>
+            <p>{text('cell 4 - items', mockedItems[3])}</p>
           </div>
         </div>
       </Row>

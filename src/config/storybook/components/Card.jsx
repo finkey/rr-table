@@ -16,7 +16,6 @@ const Button = styled.button`
 `;
 
 const Card = ({ data, close }) => {
-  console.log('data', data);
   return (
     <Wrapper>
       <Button onClick={close}>Close</Button>
