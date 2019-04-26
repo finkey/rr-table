@@ -1,7 +1,6 @@
 const defineColWidth = (width) => {
   const doesNotFinishByNumberRegex = new RegExp(/\D$/);
-
-  if (!width) {
+  if (width === null || width === undefined) {
     return undefined;
   }
 

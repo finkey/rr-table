@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Media from 'react-media';
 
-import { chooseMediaQuery, defineText, defineColMinWidth } from 'utils';
+import { defineText } from 'utils';
 import {
-  DEFAULT_MEDIA_QUERY, ASC, DESC, NOT_SORTED, DEFAULT_PADDING,
+  ASC, DESC, NOT_SORTED, DEFAULT_PADDING,
 } from 'config/constants';
 import Sort from '../Sort';
+import DefaultCell from '../Cell';
 
 /** Styles */
-const Cell = styled.div`
+const Cell = styled(DefaultCell)`
   cursor: ${({ isSortable }) => (isSortable ? 'pointer' : 'default')};
-  display: flex;
-  height: 100%;
-  min-width: ${({ width }) => defineColMinWidth(width)};
-  width: ${({ width }) => width || '100%'};
 `;
 
 const Title = styled.div`
@@ -37,17 +33,16 @@ const Title = styled.div`
 const HeadCell = ({
   breakpoints,
   center,
+  children,
+  title,
   fontSize,
-  handleSort,
-  key,
   padding,
   priority,
-  onSort,
+  width = '100%',
   sortingState,
   style,
   textColor,
-  title,
-  width,
+  onSort,
 }) => {
   const onDefaultSort = () => {
     if (typeof title === 'object' && title.sortingKey) {
@@ -56,50 +51,48 @@ const HeadCell = ({
           onSort(title.sortingKey, DESC);
           break;
         default:
-          onSort(title.sortingKey, DESC);
+          onSort(title.sortingKey, ASC);
       }
     }
   };
 
   const isSortable = typeof onSort === 'function' && typeof title.sortingKey === 'string';
-  const text = defineText(title);
-
+  const text = defineText(title, children);
   return (
-    <Media
-      key={key}
-      query={breakpoints ? chooseMediaQuery(breakpoints, priority) : DEFAULT_MEDIA_QUERY}
+    <Cell
+      breakpoints={breakpoints}
+      priority={priority}
+      handleClick={onDefaultSort}
+      isSortable={isSortable}
+      width={width}
+      center={center}
+      fontSize={fontSize}
+      padding={padding}
     >
-      {matches => (matches ? null : (
-        <Cell onClick={onDefaultSort} width={width} isSortable={isSortable}>
-          <Title
-            center={center}
-            color={textColor}
-            fontSize={fontSize}
-            padding={padding}
-            style={style}
-          >
-            {text}
-          </Title>
-          {title && isSortable && <Sort onSort={handleSort} sortingKey={title.sortingKey} />}
-        </Cell>
-      ))
-      }
-    </Media>
+      <Title
+        center={center}
+        color={textColor}
+        fontSize={fontSize}
+        padding={padding}
+        style={style}
+      >
+        {text}
+      </Title>
+      {title && isSortable && <Sort onSort={onSort} sortingKey={title.sortingKey} />}
+    </Cell>
   );
 };
 
 /** PropTypes */
 HeadCell.propTypes = {
+  /** Children */
+  children: PropTypes.node,
   /** List of breakpoints */
   breakpoints: PropTypes.arrayOf(PropTypes.number),
   /** Center the text in the cell */
   center: PropTypes.bool,
   /** Title font-size */
   fontSize: PropTypes.string,
-  /** sorting function */
-  handleSort: PropTypes.func,
-  /** id of the row */
-  key: PropTypes.string,
   /** sorting function */
   onSort: PropTypes.func,
   /** Cell Padding */

@@ -3,10 +3,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
 import { action } from '@storybook/addon-actions';
-import { text, number, boolean } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 
 /** Components Import */
-import { SAMPLE_TEXT, LONG_TEXT } from 'config/storybook/mocks';
+import { SAMPLE_TEXT } from 'config/storybook/mocks';
 import { BorderWrapper } from 'config/storybook/wrappers';
 import HeadCell from './index';
 import readme from './README.md';
