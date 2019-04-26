@@ -34,15 +34,16 @@ const HeadCell = ({
   breakpoints,
   center,
   children,
-  title,
   fontSize,
+  id,
+  onSort,
   padding,
   priority,
-  width = '100%',
   sortingState,
   style,
   textColor,
-  onSort,
+  title,
+  width = '100%',
 }) => {
   const onDefaultSort = () => {
     if (typeof title === 'object' && title.sortingKey) {
@@ -61,13 +62,14 @@ const HeadCell = ({
   return (
     <Cell
       breakpoints={breakpoints}
-      priority={priority}
-      handleClick={onDefaultSort}
-      isSortable={isSortable}
-      width={width}
       center={center}
       fontSize={fontSize}
+      handleClick={onDefaultSort}
+      isSortable={isSortable}
+      key={id}
       padding={padding}
+      priority={priority}
+      width={width}
     >
       <Title
         center={center}
@@ -93,6 +95,8 @@ HeadCell.propTypes = {
   center: PropTypes.bool,
   /** Title font-size */
   fontSize: PropTypes.string,
+  /** id of the cell */
+  id: PropTypes.string.isRequired,
   /** sorting function */
   onSort: PropTypes.func,
   /** Cell Padding */

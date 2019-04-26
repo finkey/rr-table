@@ -62,7 +62,6 @@ const Cell = ({
           backgroundColor={backgroundColor}
           onClick={handleClick}
           width={width}
-          className="HandleClick"
         >
           {renderFunctionOrComponentOrDefault()}
         </CellWrapper>
