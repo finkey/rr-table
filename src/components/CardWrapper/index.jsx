@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   top: 0;
   bottom: 0;
   height: 100vh;
+  max-width: 100vw;
   width: ${({ cardWidth }) => cardWidth};
   overflow-x: hidden;
   pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
