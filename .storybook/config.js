@@ -4,6 +4,7 @@ import { withNotes } from '@storybook/addon-notes';
 import { withKnobs } from '@storybook/addon-knobs';
 import { checkA11y } from '@storybook/addon-a11y';
 import { withInfo } from '@storybook/addon-info';
+import { configureActions } from '@storybook/addon-actions';
 
 import backgrounds from './backgrounds';
 import 'config/styles/default.css';
@@ -36,3 +37,7 @@ function loadStories() {
 }
 
 configure(loadStories, module);
+configureActions({
+  depth: 10,
+  limit: 10,
+});

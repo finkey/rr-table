@@ -42,11 +42,11 @@ const Row = ({
   data,
   emptyCellContent,
   fontSize,
-  handleClick,
   id,
   items,
   lineClamp,
   lineHeight,
+  onClick,
   onSort,
   priorities,
   rowColor,
@@ -56,7 +56,6 @@ const Row = ({
   sort,
   style,
   textColor,
-  toggleCard,
 }) => {
   const setBackgroundColor = () => {
     if (typeof colored === 'string') {
@@ -75,23 +74,17 @@ const Row = ({
     return 'transparent';
   };
 
-  const setOnClick = () => {
-    const props = {
-      breakpoints,
-      data,
-      id,
-      items,
-      priorities,
-    };
-
-    if (typeof handleClick === 'function') {
-      return () => handleClick(props);
+  const handleClick = () => {
+    if (typeof onClick === 'function') {
+      return onClick({
+        breakpoints,
+        data,
+        id,
+        items,
+        priorities,
+      });
     }
-
-    if (handleClick === undefined) {
-      return () => toggleCard(props);
-    }
-    return () => null;
+    return null;
   };
 
   const defineDefaultTextColor = () => {
@@ -107,11 +100,11 @@ const Row = ({
   return (
     <Wrapper
       backgroundColor={setBackgroundColor()}
-      clickable={handleClick === undefined || handleClick}
+      clickable={typeof onClick === 'function'}
       defaultTextColor={defineDefaultTextColor()}
       hoveredRowColor={typeof rowColor === 'object' && rowColor.hovered}
       hoveredTextColor={typeof textColor === 'object' && textColor.hovered}
-      onClick={setOnClick()}
+      onClick={handleClick}
       rowFeedback={rowFeedback}
       rowHeight={rowHeight}
       selected={selected}
@@ -167,8 +160,6 @@ Row.propTypes = {
   emptyCellContent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   /** Text font-size */
   fontSize: PropTypes.string,
-  /** On row click custom func */
-  handleClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   /** Row id */
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   /** List of the data */
@@ -205,6 +196,8 @@ Row.propTypes = {
   rowHeight: PropTypes.string,
   /** row is selected */
   selected: PropTypes.bool,
+  /** On row click custom func */
+  onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   /** sorting function */
   onSort: PropTypes.func,
   /** sorting object */
@@ -223,8 +216,6 @@ Row.propTypes = {
       selected: PropTypes.string.isRequired,
     }),
   ]),
-  /** Toggle the modal on the right */
-  toggleCard: PropTypes.func,
 };
 
 Row.defaultProps = {
