@@ -70,6 +70,8 @@ class Table extends React.Component {
     list: PropTypes.arrayOf(PropTypes.object),
     /** Component to display when data is loading */
     loader: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    /** Custom function on row click (instead of open card) */
+    onRowClick: PropTypes.func,
     /** List of priorities */
     priorities: PropTypes.arrayOf(PropTypes.number),
     /** Render Row Component */
@@ -85,6 +87,8 @@ class Table extends React.Component {
     ]),
     /** Height of the Row */
     rowHeight: PropTypes.string,
+    /** Id of the selected Row */
+    selectedRowId: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     /** separator to "join" list of string */
     separator: PropTypes.string,
     /** sorting function */
@@ -123,37 +127,9 @@ class Table extends React.Component {
     ),
   };
 
-  static defaultProps = {
-    cardWidth: '500px',
-  };
-
-  state = {
-    cardIsOpen: false,
-    cardData: {},
-    rowId: '',
-  };
-
-  toggleCard = ({ data, id }) => {
-    this.setState((previousState) => {
-      if (!previousState.cardIsOpen) {
-        return { cardIsOpen: true, cardData: data, rowId: id };
-      }
-      if (previousState.rowId === id) {
-        return { cardIsOpen: false, rowId: '' };
-      }
-      return { cardData: data, rowId: id };
-    });
-  };
-
-  closeCard = () => this.setState({ cardIsOpen: false, rowId: '' });
-
   render() {
-    const { cardIsOpen, cardData, rowId } = this.state;
-
     const {
       breakpoints,
-      card,
-      cardWidth,
       cellPadding,
       center,
       colWidths,
@@ -170,11 +146,13 @@ class Table extends React.Component {
       lineHeight,
       list,
       loader: Loader,
+      onRowClick,
       onSort,
       priorities,
       row,
       rowColor,
       rowHeight,
+      selectedRowId,
       separator,
       sort,
       styles,
@@ -236,17 +214,17 @@ class Table extends React.Component {
           colored: setBackgroundColor(index, colored),
           emptyCellContent,
           fontSize,
-          key: id,
+          onClick: onRowClick,
           items,
+          key: id,
           lineClamp,
           lineHeight,
           priorities,
           rowColor,
           rowFeedback: true,
           rowHeight,
-          selected: rowId === id,
+          selected: selectedRowId === id,
           textColor,
-          toggleCard: this.toggleCard,
         };
 
         if (row) {
@@ -261,14 +239,7 @@ class Table extends React.Component {
     return (
       <TableWrapper style={styles && styles.table}>
         {HeadComponent(propsPassedToHeadComponent)}
-
         {renderRow()}
-
-        {card && (
-          <CardWrapper isOpen={cardIsOpen} cardWidth={cardWidth}>
-            {card({ data: cardData, close: this.closeCard })}
-          </CardWrapper>
-        )}
       </TableWrapper>
     );
   }

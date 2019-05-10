@@ -40,11 +40,11 @@ storiesOf('- Table -|1 - Default', module)
     <Table titles={array('titles', ['Name', 'Surname', 'id'])} list={object('list', mockedList)} />
   ))
 
-  .add('2 - Default Table with keys and Card', () => (
+  .add('2 - Default Table with keys', () => (
     <Table
       titles={array('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
-      card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -61,6 +61,7 @@ storiesOf('- Table -|1 - Default', module)
       center={boolean('center', false)}
       isLoading={boolean('isLoading', false)}
       loader={Loader}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -83,6 +84,7 @@ storiesOf('- Table -|1 - Default', module)
       rowHeight={text('rowHeight', '120px')}
       textColor={color('textColor', '#303f9f')}
       cellPadding={text('cellPadding', '10px')}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -110,6 +112,7 @@ storiesOf('- Table -|1 - Default', module)
       })}
       rowColor={object('rowColor', { default: '#e8eaf6', hovered: '#b0bec5', selected: '#00897b' })}
       cellPadding={text('cellPadding', '10px')}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -136,6 +139,7 @@ storiesOf('- Table -|1 - Default', module)
       priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -164,6 +168,7 @@ storiesOf('- Table -|1 - Default', module)
       priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ));
@@ -188,6 +193,7 @@ storiesOf('- Table -|2 - Empty data', module)
       center={boolean('center', false)}
       isLoading={boolean('isLoading', false)}
       loader={Loader}
+      onRowClick={action('row clicked')}
       list={object('list', mockedListWithEmptyData)}
     />
   ))
@@ -203,6 +209,7 @@ storiesOf('- Table -|2 - Empty data', module)
       center={boolean('center', false)}
       isLoading={boolean('isLoading', false)}
       loader={Loader}
+      onRowClick={action('row clicked')}
       list={object('list', [])}
     />
   ))
@@ -218,6 +225,7 @@ storiesOf('- Table -|2 - Empty data', module)
       center={boolean('center', false)}
       isLoading={boolean('isLoading', false)}
       loader={Loader}
+      onRowClick={action('row clicked')}
       list={object('list', [])}
       emptyList={text('emptyList', '0 results')}
     />
@@ -234,6 +242,7 @@ storiesOf('- Table -|2 - Empty data', module)
       center={boolean('center', false)}
       isLoading={boolean('isLoading', false)}
       loader={Loader}
+      onRowClick={action('row clicked')}
       list={object('list', [])}
       emptyList={<EmptyRowContent>Empty list</EmptyRowContent>}
     />
@@ -251,6 +260,7 @@ storiesOf('- Table -|3 - Custom Head', module)
   .add('- Custom Head (component)', () => (
     <Table
       head={object('head', <Head titles={array('titles', ['Name', 'Surname', 'id'])} />)}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -258,6 +268,7 @@ storiesOf('- Table -|3 - Custom Head', module)
   .add('- Custom Head (component function)', () => (
     <Table
       titles={array('titles', ['Name', 'Surname', 'id'])}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
       head={Head}
     />
@@ -266,6 +277,7 @@ storiesOf('- Table -|3 - Custom Head', module)
   .add('- Custom Head (function render props)', () => (
     <Table
       titles={array('titles', ['Name', 'Surname', 'id'])}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
       head={({ titles }) => (
         <div
@@ -298,6 +310,7 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
       headCell={HeadCell}
       titles={object('titles', mockedTitles)}
       keys={array('keys', mockedKeys)}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ))
@@ -305,6 +318,7 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
   .add('- Custom HeadCell (function render props)', () => (
     <Table
       titles={array('titles', ['Name', 'Surname', 'id'])}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
       headCell={({ title, id }) => <HeadCell key={id}>{title}</HeadCell>}
     />
@@ -313,6 +327,7 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
   .add('- Custom Head with custom HeadCell (function render props)', () => (
     <Table
       titles={array('titles', ['Name', 'Surname', 'id'])}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
       head={Head}
       headCell={({ title, id }) => <HeadCell key={id}>{title}</HeadCell>}
@@ -352,6 +367,7 @@ storiesOf('- Table -|4 - Custom HeadCell', module)
       priorities={array('priorities', mockedPriorities)}
       card={({ data, close }) => <Card close={close} data={object('card data', data)} />}
       colored={boolean('colored', true)}
+      onRowClick={action('row clicked')}
       list={object('list', mockedList)}
     />
   ));
@@ -377,12 +393,12 @@ storiesOf('- Table -|5 - render props row', module)
       row={(rowProps) => {
         if (!rowProps.data.name && !rowProps.data.surname && !rowProps.data.info.age) {
           return (
-            <Row id={rowProps.id} {...rowProps} handleClick={null}>
+            <Row id={rowProps.id} {...rowProps} onClick={action('row clicked')} handleClick={null}>
               <EmptyRowContent>Hello</EmptyRowContent>
             </Row>
           );
         }
-        return <Row {...rowProps} />;
+        return <Row {...rowProps} onClick={action('row clicked')} />;
       }}
     />
   ))
@@ -405,10 +421,11 @@ storiesOf('- Table -|5 - render props row', module)
               handleClick={null}
               items={[<EmptyRowContent>Hello</EmptyRowContent>, 'Houhou hou hou']}
               colWidths={array('colWidths', [4, 1])}
+              onClick={action('row clicked')}
             />
           );
         }
-        return <Row {...rowProps} />;
+        return <Row {...rowProps} onClick={action('row clicked')} />;
       }}
     />
   ));
