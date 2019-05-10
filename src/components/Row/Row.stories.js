@@ -5,6 +5,7 @@ import centered from '@storybook/addon-centered';
 import {
   array, boolean, color, number, object, text,
 } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 /** Components Import */
 import {
@@ -33,7 +34,7 @@ storiesOf('Components|Row', module)
 
   /** Stories */
   .add(
-    '- Default Row',
+    'a1 - Default Row',
     () => <Row items={array('items', mockedItems)} id={text('id', 'row-id')} />,
     {
       notes: { markdown: readme },
@@ -41,20 +42,21 @@ storiesOf('Components|Row', module)
   )
 
   .add(
-    '- Responsive Row',
+    'a2 - Responsive Row',
     () => (
       <Row
         id={text('id', 'row-id')}
         items={array('items', mockedItems)}
         breakpoints={array('breakpoints', mockedBreakpoints)}
         priorities={array('priorities', mockedPriorities)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Responsive Row - default colored',
+    'a3 - Responsive Row - default colored',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -62,13 +64,14 @@ storiesOf('Components|Row', module)
         breakpoints={array('breakpoints', mockedBreakpoints)}
         priorities={array('priorities', mockedPriorities)}
         colored={boolean('colored', true)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with centered text',
+    'a4 - Row with centered text',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -77,13 +80,14 @@ storiesOf('Components|Row', module)
         priorities={array('priorities', mockedPriorities)}
         colored={text('colored', '#fff8e1')}
         center={boolean('center', true)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom height',
+    'a5 - Row with custom height',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -93,13 +97,14 @@ storiesOf('Components|Row', module)
         colored={text('colored', '#fff8e1')}
         rowHeight={text('rowHeight', '200px')}
         center={boolean('center', false)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom empty cell text',
+    'a6 - Row with custom empty cell text',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -109,13 +114,14 @@ storiesOf('Components|Row', module)
         colored={text('colored', '#fff8e1')}
         emptyCellContent={text('emptyCellContent', 'no data')}
         center={boolean('center', false)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom empty cell Content',
+    'a7 - Row with custom empty cell Content',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -125,13 +131,14 @@ storiesOf('Components|Row', module)
         colored={boolean('colored', true)}
         emptyCellContent={() => <div style={{ color: 'peru', textAlign: 'center' }}>NA</div>}
         center={boolean('center', false)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom col widths',
+    'a8 - Row with custom col widths',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -141,13 +148,14 @@ storiesOf('Components|Row', module)
         colored={boolean('colored', true)}
         colWidths={array('colWidths', mockedColWidths)}
         center={boolean('center', false)}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom options',
+    'a9 - Row with custom options',
     () => (
       <Row
         breakpoints={array('breakpoints', mockedBreakpoints)}
@@ -164,13 +172,14 @@ storiesOf('Components|Row', module)
         priorities={array('priorities', mockedPriorities)}
         rowHeight={text('rowHeight', '140px')}
         textColor={color('textColor', '#303f9f')}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom items',
+    'b10 - Row with custom items',
     () => (
       <Row
         id={text('id', 'row-id')}
@@ -180,13 +189,14 @@ storiesOf('Components|Row', module)
         emptyCellContent={() => <div style={{ color: 'peru', textAlign: 'center' }}>NA</div>}
         center={boolean('center', false)}
         items={array('items', ['hello'])}
+        onClick={action('row clicked')}
       />
     ),
     { notes: { markdown: readme } },
   )
 
   .add(
-    '- Row with custom cells',
+    'b11 - Row with custom cells',
     () => (
       <Row id={text('id', 'row-id')}>
         <Cell>
@@ -224,7 +234,7 @@ storiesOf('Components|Row', module)
   )
 
   .add(
-    '- Row with breakpoints and custom cells',
+    'b12 - Row with breakpoints and custom cells',
     () => (
       <Row id={text('id', 'row-id')}>
         <Cell
@@ -277,7 +287,7 @@ storiesOf('Components|Row', module)
   )
 
   .add(
-    '- Custom row',
+    'b13 - Custom row',
     () => (
       <Row id={text('id', 'row-id')} rowHeight={text('rowHeight', '')}>
         <div
