@@ -1,6 +1,6 @@
 {
   "name": "rr-table",
-  "version": "0.1.2",
+  "version": "0.1.3-alpha.0",
   "description": "Responsive and customizable React Table",
   "main": "lib/index.js",
   "scripts": {
