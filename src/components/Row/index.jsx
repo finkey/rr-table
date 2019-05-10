@@ -216,8 +216,6 @@ Row.propTypes = {
       selected: PropTypes.string.isRequired,
     }),
   ]),
-  /** Toggle the modal on the right */
-  toggleCard: PropTypes.func,
 };
 
 Row.defaultProps = {
