@@ -25,6 +25,7 @@ const IconWrapper = styled.div`
 `;
 
 const ICON_WIDTH = 18;
+const ICON_HEIGHT= 18;
 
 /** Component */
 const Sort = ({ onSort, sortingKey }) => {
@@ -40,10 +41,10 @@ const Sort = ({ onSort, sortingKey }) => {
   return (
     <SortWrapper>
       <IconWrapper onClick={handleSortASC}>
-        <ChevronUp width={ICON_WIDTH} />
+        <ChevronUp width={ICON_WIDTH} height={ICON_HEIGHT} />
       </IconWrapper>
       <IconWrapper onClick={handleSortDESC}>
-        <ChevronDown width={ICON_WIDTH} />
+        <ChevronDown width={ICON_WIDTH} height={ICON_HEIGHT} />
       </IconWrapper>
     </SortWrapper>
   );
